@@ -61,6 +61,9 @@ class Wallet(BaseWallet):
 
         self.entries: DateEntry = DateEntry(DATE("year"))
 
+
+        # ---- Widget ---- #
+
         self.MainFrame = customtkinter.CTkFrame(master=self.master, fg_color="transparent")
         self.MainFrame.grid(row=self.row, column=self.column, padx=5, pady=5, sticky="wn")
 

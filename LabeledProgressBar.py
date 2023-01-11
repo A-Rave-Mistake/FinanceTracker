@@ -16,6 +16,9 @@ class LabeledProgressBar:
         self.current_progress = current_progress
         self.max_progress = max_progress
 
+
+        # ---- Widget ----#
+
         self.MainFrame = customtkinter.CTkFrame(master=self.master, fg_color="transparent")
         self.MainFrame.grid(sticky="w", padx=15)
 

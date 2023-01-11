@@ -4,8 +4,8 @@ from time import localtime
 from WalletContainer import WalletContainer
 from wallet import Wallet, DullWallet, wallet_colors
 
-# GUIs
 from PageButton import PageButton
+from EntryAdd import EntryAdd
 
 
 # ---- Variables ---- #
@@ -55,8 +55,9 @@ class MainWindow:
         self.WalletFrame.pack(fill="both", expand=True)
 
         self.WalletMaster = WalletContainer(master=self.WalletFrame, parent=self, root=self.root, time=now)
-
         self.add_wallet()
+
+        self.EntryAddButton = EntryAdd(parent=self.MainFrame, root=self.root)
 
         self.root.mainloop()
 
