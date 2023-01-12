@@ -63,8 +63,8 @@ class Wallet(BaseWallet):
         self.entries: DateEntry = DateEntry(DATE("year"))
 
         # Targets
-        self.target_expense = 0.0
-        self.target_income = 0.0
+        self.target_expense = 1000.0
+        self.target_income = 1000.0
 
 
         # ---- Widget ---- #
@@ -92,11 +92,26 @@ class Wallet(BaseWallet):
                                             progress_color="#48c746",
                                             fg_color="#7fab7e")
 
+        self.update_IncomeBar()
+
         self.ExpensesBar = LabeledProgressBar(master=self.MainFrame,
                                             root=self.root,
                                             text="Expenses",
                                             progress_color="#cf413e",
                                             fg_color="#874646")
+
+        self.update_ExpensesBar()
+
+
+
+
+    def update_ExpensesBar(self):
+        self.ExpensesBar.update_progressbar(self.entries.get_total_expenses(), self.target_expense)
+        self.ExpensesBar.format_progress_text(self.entries.get_total_expenses(), self.target_expense, self.currency)
+
+    def update_IncomeBar(self):
+        self.IncomeBar.update_progressbar(self.entries.get_total_income(), self.target_income)
+        self.IncomeBar.format_progress_text(self.entries.get_total_income(), self.target_income, self.currency)
 
 
 

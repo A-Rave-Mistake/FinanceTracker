@@ -59,10 +59,16 @@ class DateEntry:
             return False
 
         if kwargs.get('type').lower() == "expense":
-            self.expenseList.add_entry(TrackerEntry(name="Test", category="Default", value=200, currency="$USD"))
+            self.expenseList.add_entry(TrackerEntry(name=kwargs.get('name'),
+                                                    category=kwargs.get('category'),
+                                                    value=kwargs.get('value'),
+                                                    currency=kwargs.get('currency')))
             return True
         elif kwargs.get('type').lower() == "income":
-            self.incomeList.add_entry(TrackerEntry(name="Test", category="Default", value=200, currency="$USD"))
+            self.incomeList.add_entry(TrackerEntry(name=kwargs.get('name'),
+                                                    category=kwargs.get('category'),
+                                                    value=kwargs.get('value'),
+                                                    currency=kwargs.get('currency')))
             return True
         else:
             return False

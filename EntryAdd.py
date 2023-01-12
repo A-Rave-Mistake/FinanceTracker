@@ -130,16 +130,23 @@ class EntryAdd:
     # Add income/expense entry to the currently selected wallet
     def add_entry(self, *args):
         if self.is_entry_valid():
-            print(self.current_wallet.entries.add_entry(self.get_entry_values()))
+            result = self.current_wallet.entries.add_entry(self.get_entry_values())
         else:
             print("Failed to add new entry")
+            return
+
+        if result:
+            if self.TypeDropdown.get().lower() == "income":
+                self.current_wallet.update_IncomeBar()
+            else:
+                self.current_wallet.update_ExpensesBar()
 
     def get_entry_values(self) -> dict:
         d = {}
         d['name'] = self.NameEntry.get()
         d['type'] = self.TypeDropdown.get()
         d['category'] = self.CategoryDropdown.get()
-        d['value'] = self.AmountEntry.get()
+        d['value'] = float(self.AmountEntry.get())
         d['currency'] = self.CurrencyLabel.cget("text")
         return d
 
@@ -152,10 +159,19 @@ class EntryAdd:
         return True
 
     def set_current_wallet(self, *args):
-        self.current_wallet = self.WalletDropdown.get()
+        self.current_wallet = self.find_wallet()[1]
+        self.update_currency()
+
+    def find_wallet(self) -> tuple[int, object]:
+        for wallet in self.walletsO:
+            if wallet.wallet_name == self.WalletDropdown.get():
+                return (self.walletsO.index(wallet), wallet)
 
     def update_wallet_list(self, wallets):
         self.wallets  = [wallet.wallet_name for wallet in wallets]
         self.WalletDropdown.configure(values=self.wallets)
         self.WalletDropdown.set(self.wallets[0])
         self.current_wallet = None if len(self.walletsO) == 0 else self.walletsO[0]
+
+    def update_currency(self):
+        self.CurrencyLabel.configure(text=self.current_wallet.currency)
