@@ -22,8 +22,6 @@ class MainWindow:
     def __init__(self, darkmode: bool = True,
                  geometry: tuple[int, int] = (1000, 700)):
 
-        self.wallets: list[Wallet] = []
-
 
         # ---- Widget Components ---- #
 
@@ -55,9 +53,11 @@ class MainWindow:
         self.WalletFrame.pack(fill="both", expand=True)
 
         self.WalletMaster = WalletContainer(master=self.WalletFrame, parent=self, root=self.root, time=now)
-        self.add_wallet()
 
-        self.EntryAddButton = EntryAdd(parent=self.MainFrame, root=self.root)
+        self.EntryAdd = EntryAdd(parent=self.MainFrame, root=self.root, wallets=self.WalletMaster.wallets)
+
+
+        self.add_wallet()
 
         self.root.mainloop()
 
@@ -66,3 +66,6 @@ class MainWindow:
 
     def add_wallet(self):
         self.WalletMaster.add_wallet()
+
+    def update_wallets(self, wallets: list[Wallet]):
+        self.EntryAdd.update_wallet_list(wallets)

@@ -27,15 +27,20 @@ class WalletContainer(LinkedList):
         from random import choice
         wcolor = choice(wallet_colors)
 
-        self.append(Wallet(master=self.WalletFrame,
-                                   root=self.root,
-                                   name=self.wallet_default_name(),
-                                   year=self.time.tm_year,
-                                   currency="USD",
-                                   wallet_color=wcolor[0],
-                                   border_color=wcolor[1],
-                                   row=self.get_row(),
-                                   column=self.get_column()))
+        new_wallet = Wallet(master=self.WalletFrame,
+                            root=self.root,
+                            name=self.wallet_default_name(),
+                            year=self.time.tm_year,
+                            currency="USD",
+                            wallet_color=wcolor[0],
+                            border_color=wcolor[1],
+                            row=self.get_row(),
+                            column=self.get_column())
+
+        self.append(new_wallet)
+        self.wallets.append(new_wallet)
+
+        self.update_wallets()
 
         self.add_dull_wallet()
 
@@ -61,3 +66,6 @@ class WalletContainer(LinkedList):
     # If wallet name is not specified by the user it will automatically be indexed
     def wallet_default_name(self) -> str:
         return f"Wallet #{len(self.wallets)+1}"
+
+    def update_wallets(self):
+        self.parent.update_wallets(self.wallets)
