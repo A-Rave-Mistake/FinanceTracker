@@ -1,5 +1,8 @@
 from typing import NewType
 
+import FT_Time
+
+
 DATE = NewType(('date'), tuple)
 
 
@@ -63,15 +66,31 @@ class DateEntry:
                                                     category=kwargs.get('category'),
                                                     value=kwargs.get('value'),
                                                     currency=kwargs.get('currency')))
+            self.add_entry_to_children(kwargs)
             return True
         elif kwargs.get('type').lower() == "income":
             self.incomeList.add_entry(TrackerEntry(name=kwargs.get('name'),
                                                     category=kwargs.get('category'),
                                                     value=kwargs.get('value'),
                                                     currency=kwargs.get('currency')))
+            self.add_entry_to_children(kwargs)
             return True
         else:
             return False
+
+    def add_entry_to_children(self, entry):
+        if len(self.children) == 0:
+            return
+
+        if self.date[0] == "year":
+            self.children[FT_Time.now.tm_mon-1].add_entry(entry)
+            print([children.incomeList for children in self.children])
+        elif self.date[0] == "month":
+            self.children[FT_Time.now.tm_mday-1].add_entry(entry)
+            print(self.children[-1].incomeList.entries[-1])
+        else:
+            return
+
 
     def get_total_expenses(self) -> float:
         return self.expenseList.get_total()

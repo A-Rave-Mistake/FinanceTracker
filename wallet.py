@@ -127,6 +127,16 @@ class Wallet(BaseWallet):
         self.IncomeBar.update_progressbar(self.entries.get_total_income(), self.target_income)
         self.IncomeBar.format_progress_text(self.entries.get_total_income(), self.target_income, self.currency)
 
+    def add_entry(self, entry):
+        result = self.entries.add_entry(entry)
+
+        if result:
+            print("Added New Entry")
+            if entry['type'].lower() == "income":
+                self.update_IncomeBar()
+            else:
+                self.update_ExpensesBar()
+
 
 
 # This functions as a button to create new Wallet object

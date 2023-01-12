@@ -130,16 +130,10 @@ class EntryAdd:
     # Add income/expense entry to the currently selected wallet
     def add_entry(self, *args):
         if self.is_entry_valid():
-            result = self.current_wallet.entries.add_entry(self.get_entry_values())
+            self.current_wallet.add_entry(self.get_entry_values())
         else:
             print("Failed to add new entry")
             return
-
-        if result:
-            if self.TypeDropdown.get().lower() == "income":
-                self.current_wallet.update_IncomeBar()
-            else:
-                self.current_wallet.update_ExpensesBar()
 
     def get_entry_values(self) -> dict:
         d = {}
