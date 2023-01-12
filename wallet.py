@@ -55,11 +55,16 @@ class Wallet(BaseWallet):
         self.row = row
         self.column = column
 
+        # Wallet Info
         self.wallet_name = name
         self.currency = currency
         self.current_year = year
 
         self.entries: DateEntry = DateEntry(DATE("year"))
+
+        # Targets
+        self.target_expense = 0.0
+        self.target_income = 0.0
 
 
         # ---- Widget ---- #

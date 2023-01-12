@@ -6,7 +6,7 @@ DATE = NewType('date', str)
 # Represents a single value entry that is either classified as 'expense' or 'income'
 class TrackerEntry:
 
-    def __init__(self, name: str, category, value: float):
+    def __init__(self, name: str, category, value: float, currency: str):
         """
         :param string name = name of entry as typed by the user
         :param category = list of categories this entry is labelled by
@@ -16,6 +16,7 @@ class TrackerEntry:
         self.name = name
         self.category = category
         self.value = value
+        self.currency = currency
 
 
 
@@ -52,6 +53,19 @@ class DateEntry:
         # Contains entries of all children that belong to this object
         self.expenseList = EntryContainer()
         self.incomeList = EntryContainer()
+
+    def add_entry(self, kwargs) -> bool:
+        if not all([kwargs.get('name'), kwargs.get('category'), kwargs.get('type'), kwargs.get('value'), kwargs.get('currency')]):
+            return False
+
+        if kwargs.get('type').lower() == "expense":
+            self.expenseList.add_entry(TrackerEntry(name="Test", category="Default", value=200, currency="$USD"))
+            return True
+        elif kwargs.get('type').lower() == "income":
+            self.incomeList.add_entry(TrackerEntry(name="Test", category="Default", value=200, currency="$USD"))
+            return True
+        else:
+            return False
 
     def get_total_expenses(self) -> float:
         return self.expenseList.get_total()

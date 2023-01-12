@@ -6,11 +6,15 @@ class EntryAdd:
     def __init__(self,
                  parent: customtkinter,
                  root: customtkinter.CTk,
+                 MainWindow,
                  wallets: list):
 
         self.parent = parent
         self.root = root
         self.wallets = [wallet.wallet_name for wallet in wallets]
+        self.walletsO = wallets
+
+        self.current_wallet = None
 
 
         # ---- Widget ---- #
@@ -33,7 +37,8 @@ class EntryAdd:
                                                         bg_color="transparent",
                                                         width=125,
                                                         corner_radius=5,
-                                                          dynamic_resizing=False)
+                                                        dynamic_resizing=False,
+                                                        command=self.set_current_wallet)
 
         self.WalletDropdown.grid(row=1)
 
@@ -116,12 +121,41 @@ class EntryAdd:
                                                  hover_color="#42bd63",
                                                  bg_color="transparent",
                                                  width=25,
-                                                 corner_radius=5)
+                                                 corner_radius=5,
+                                                 command=self.add_entry)
 
         self.AddButton.grid(row=1)
 
+
+    # Add income/expense entry to the currently selected wallet
+    def add_entry(self, *args):
+        if self.is_entry_valid():
+            print(self.current_wallet.entries.add_entry(self.get_entry_values()))
+        else:
+            print("Failed to add new entry")
+
+    def get_entry_values(self) -> dict:
+        d = {}
+        d['name'] = self.NameEntry.get()
+        d['type'] = self.TypeDropdown.get()
+        d['category'] = self.CategoryDropdown.get()
+        d['value'] = self.AmountEntry.get()
+        d['currency'] = self.CurrencyLabel.cget("text")
+        return d
+
+    def is_entry_valid(self) -> bool:
+        if self.NameEntry.get() == "":
+            return False
+        if self.AmountEntry.get() == "":
+            return False
+
+        return True
+
+    def set_current_wallet(self, *args):
+        self.current_wallet = self.WalletDropdown.get()
 
     def update_wallet_list(self, wallets):
         self.wallets  = [wallet.wallet_name for wallet in wallets]
         self.WalletDropdown.configure(values=self.wallets)
         self.WalletDropdown.set(self.wallets[0])
+        self.current_wallet = None if len(self.walletsO) == 0 else self.walletsO[0]

@@ -54,7 +54,10 @@ class MainWindow:
 
         self.WalletMaster = WalletContainer(master=self.WalletFrame, parent=self, root=self.root, time=now)
 
-        self.EntryAdd = EntryAdd(parent=self.MainFrame, root=self.root, wallets=self.WalletMaster.wallets)
+        self.EntryAdd = EntryAdd(parent=self.MainFrame,
+                                 root=self.root,
+                                 MainWindow=self,
+                                 wallets=self.WalletMaster.wallets)
 
 
         self.add_wallet()
