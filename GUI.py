@@ -1,5 +1,5 @@
 import customtkinter
-from time import localtime
+import FT_Time
 
 from WalletContainer import WalletContainer
 from wallet import Wallet, DullWallet, wallet_colors
@@ -10,9 +10,7 @@ from EntryAdd import EntryAdd
 
 # ---- Variables ---- #
 
-now = localtime()
-months = {1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June",
-          7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December"}
+
 
 
 # ---- Classes ---- #
@@ -52,7 +50,7 @@ class MainWindow:
         self.WalletFrame = customtkinter.CTkFrame(master=self.MainFrame)
         self.WalletFrame.pack(fill="both", expand=True)
 
-        self.WalletMaster = WalletContainer(master=self.WalletFrame, parent=self, root=self.root, time=now)
+        self.WalletMaster = WalletContainer(master=self.WalletFrame, parent=self, root=self.root, time=FT_Time.now)
 
         self.EntryAdd = EntryAdd(parent=self.MainFrame,
                                  root=self.root,

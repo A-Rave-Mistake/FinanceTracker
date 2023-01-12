@@ -1,6 +1,6 @@
 from typing import NewType
 
-DATE = NewType('date', str)
+DATE = NewType(('date'), tuple)
 
 
 # Represents a single value entry that is either classified as 'expense' or 'income'
@@ -78,3 +78,9 @@ class DateEntry:
 
     def get_total_income(self) -> float:
         return self.incomeList.get_total()
+
+    def create_months(self, months):
+        self.children = [DateEntry(DATE(("month", month)), parent=self) for month in months]
+
+    def create_days(self, length: int):
+        self.children = [DateEntry(DATE(("day", day)), parent=self) for day in range(1, length+1)]

@@ -1,5 +1,6 @@
 import customtkinter
 
+import FT_Time
 from entry import DateEntry
 from entry import DATE
 
@@ -60,7 +61,20 @@ class Wallet(BaseWallet):
         self.currency = currency
         self.current_year = year
 
-        self.entries: DateEntry = DateEntry(DATE("year"))
+        self.time = FT_Time.now
+        self.months = [FT_Time.months[month] for month in range(1, self.time.tm_mon+1)]
+
+        # Current year, contains months as children according to real time
+        self.entries: DateEntry = DateEntry(DATE(("year", self.current_year)))
+        # Create a month DateEntry for every month that has already occured in this year
+        self.entries.create_months(self.months)
+        # Create a day DateEntry for every day elapsed in current month
+        for child in self.entries.children:
+            month = child.date[1]
+            if month != FT_Time.months[self.time.tm_mon]:
+                child.create_days(FT_Time.get_days_bystr(month))
+            else:
+                child.create_days(self.time.tm_mday)
 
         # Targets
         self.target_expense = 1000.0
