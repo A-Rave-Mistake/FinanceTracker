@@ -84,10 +84,8 @@ class DateEntry:
 
         if self.date[0] == "year":
             self.children[FT_Time.now.tm_mon-1].add_entry(entry)
-            print([children.incomeList for children in self.children])
         elif self.date[0] == "month":
             self.children[FT_Time.now.tm_mday-1].add_entry(entry)
-            print(self.children[-1].incomeList.entries[-1])
         else:
             return
 

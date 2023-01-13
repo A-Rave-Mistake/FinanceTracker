@@ -131,6 +131,7 @@ class EntryAdd:
     def add_entry(self, *args):
         if self.is_entry_valid():
             self.current_wallet.add_entry(self.get_entry_values())
+            self.reset_entries()
         else:
             print("Failed to add new entry")
             return
@@ -146,11 +147,27 @@ class EntryAdd:
 
     def is_entry_valid(self) -> bool:
         if self.NameEntry.get() == "":
-            return False
-        if self.AmountEntry.get() == "":
+            self.NameEntry.configure(border_color="red")
             return False
 
+        if self.AmountEntry.get() == "":
+            self.AmountEntry.configure(border_color="red")
+            return False
+
+        if not self.AmountEntry.get().isdigit():
+            self.AmountEntry.configure(border_color="red")
+            return False
+
+        self.reset_error_colors()
         return True
+
+    def reset_error_colors(self):
+        self.NameEntry.configure(border_color="gray")
+        self.AmountEntry.configure(border_color="gray")
+
+    def reset_entries(self):
+        self.NameEntry.delete(0, len(self.NameEntry.get()))
+        self.AmountEntry.delete(0, len(self.AmountEntry.get()))
 
     def set_current_wallet(self, *args):
         self.current_wallet = self.find_wallet()[1]
