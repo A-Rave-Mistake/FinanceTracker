@@ -21,13 +21,14 @@ class EntryListBox:
         self.row: int = row
         self.column: int = column
 
+        self.current_button: SortButton = None
+
         self.entries: list[TrackerEntry] = []
 
 
         # ---- Widget ---- #
 
         self.MainFrame = customtkinter.CTkFrame(master=self.master)
-        #self.MainFrame.grid(row=self.row, column=self.column, padx=5, pady=5, sticky="nsew")
         self.MainFrame.pack(expand=True, fill="x", side="left")
 
 
