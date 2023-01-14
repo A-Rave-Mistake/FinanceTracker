@@ -60,10 +60,11 @@ class WalletContainer(LinkedList):
     # ---- Functions ---- #
 
     def add_dull_wallet(self):
-        self.append(DullWallet(master=self.WalletFrame,
-                               parent=self,
-                               row=self.get_row(),
-                               column=self.get_column()))
+        if len(self.wallets) < 5:
+            self.append(DullWallet(master=self.WalletFrame,
+                                   parent=self,
+                                   row=self.get_row(),
+                                   column=self.get_column()))
 
     def remove_dull_wallet(self):
         dull = self.remove_tail()

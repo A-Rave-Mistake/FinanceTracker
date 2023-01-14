@@ -20,7 +20,7 @@ class EntryAdd:
         # ---- Widget ---- #
 
         self.MainFrame = customtkinter.CTkFrame(master=self.parent, fg_color="transparent")
-        self.MainFrame.pack(side="left", pady=5, padx=5)
+        self.MainFrame.pack(side="left", pady=5, padx=5, anchor="s")
 
         # Wallet Select
         self.WalletFrame = customtkinter.CTkFrame(master=self.MainFrame, fg_color="transparent", height=25)
@@ -147,6 +147,7 @@ class EntryAdd:
         d['category'] = self.CategoryDropdown.get()
         d['value'] = float(self.AmountEntry.get())
         d['currency'] = self.CurrencyLabel.cget("text")
+        d['wallet'] = self.current_wallet.wallet_name
         return d
 
     def is_entry_valid(self) -> bool:

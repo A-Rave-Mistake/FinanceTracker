@@ -9,23 +9,38 @@ DATE = NewType(('date'), tuple[str, str or int])
 
 # Represents a single value entry that is either classified as 'expense' or 'income'
 class TrackerEntry:
-    def __init__(self, name: str, category: dict, value: float, currency: str):
+    def __init__(self, name: str,
+                 type: str,
+                 category: str,
+                 value: float,
+                 currency: str,
+                 wallet: str,
+                 date):
         '''
         Args:
             name::str
                 Name of entry as typed by the user
-            category::dict
-                Dict representation of Category class
+            category::str
+                Category name
+            type::str
+                Equal to either 'Income' or 'Expense'
             value::float
                 Amount of specified currency
             currency::str
                 Currency
+            wallet::str
+                Name of the wallet this entry belongs to
+            date::FT_Time.now = time.localtime()
+                Date of entry creation
         '''
 
-        self.name = name
+        self.name: str = name
+        self.type: str = type
         self.category = category
-        self.value = value
-        self.currency = currency
+        self.value: float = value
+        self.currency: str = currency
+        self.wallet: str = wallet
+        self.date = date
 
 
 
@@ -91,26 +106,36 @@ class DateEntry:
 
     # Add new entry to the DateEntry object of current year
     # Also tell the correct child element (month) to do the same
-    def add_entry(self, kwargs) -> bool:
+    def add_entry(self, kwargs):
         if not all([kwargs.get('name'), kwargs.get('category'), kwargs.get('type'), kwargs.get('value'), kwargs.get('currency')]):
-            return False
+            return tuple(False)
 
         if kwargs.get('type').lower() == "expense":
-            self.expenseList.add_entry(TrackerEntry(name=kwargs.get('name'),
-                                                    category=kwargs.get('category'),
-                                                    value=kwargs.get('value'),
-                                                    currency=kwargs.get('currency')))
+            new_entry = TrackerEntry(name=kwargs.get('name'),
+                                     type=kwargs.get('type'),
+                                     category=kwargs.get('category'),
+                                     value=kwargs.get('value'),
+                                     currency=kwargs.get('currency'),
+                                     wallet=kwargs.get('wallet'),
+                                     date=FT_Time.now)
+            self.expenseList.add_entry(new_entry)
             self.add_entry_to_children(kwargs)
-            return True
+            return (True, new_entry)
+
         elif kwargs.get('type').lower() == "income":
-            self.incomeList.add_entry(TrackerEntry(name=kwargs.get('name'),
-                                                    category=kwargs.get('category'),
-                                                    value=kwargs.get('value'),
-                                                    currency=kwargs.get('currency')))
+            new_entry = TrackerEntry(name=kwargs.get('name'),
+                                     type=kwargs.get('type'),
+                                     category=kwargs.get('category'),
+                                     value=kwargs.get('value'),
+                                     currency=kwargs.get('currency'),
+                                     wallet=kwargs.get('wallet'),
+                                     date=FT_Time.now)
+            self.incomeList.add_entry(new_entry)
             self.add_entry_to_children(kwargs)
-            return True
+            return (True, new_entry)
+
         else:
-            return False
+            return tuple(False)
 
     # Each time a new entry is added, all children of this DateEntry object will do the same
     # Order: DateEntry(year) -> DateEntry(month) -> DateEntry(day)

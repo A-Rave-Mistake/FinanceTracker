@@ -146,9 +146,10 @@ class Wallet(BaseWallet):
     def add_entry(self, entry):
         result = self.entries.add_entry(entry)
 
-        if result:
+        if result[0]:
             print("Added New Entry")
             self.update_widgets()
+            self.parent.EntriesMaster.add_entry(result[1])
 
     def add_category(self, **kwargs) -> bool:
         if self.category_exists(kwargs.get('name')):
