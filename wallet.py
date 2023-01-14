@@ -78,7 +78,8 @@ class Wallet(BaseWallet):
             else:
                 child.create_days(self.time.tm_mday)
 
-        # Targets
+        # Money
+        self.current_money = 0.0
         self.target_expense = 1000.0
         self.target_income = 1000.0
 
@@ -90,7 +91,7 @@ class Wallet(BaseWallet):
 
         self.WalletButton = customtkinter.CTkButton(master=self.MainFrame,
                                                     fg_color=kwargs.get("wallet_color") or wallet_colors[0][0],
-                                                    text=f"{self.wallet_name}\n$4345",
+                                                    text=f"{self.wallet_name}\n{self.current_money} {self.currency}",
                                                     font=(("Lato"), 22),
                                                     width=310,
                                                     height=125,
@@ -134,10 +135,13 @@ class Wallet(BaseWallet):
 
         if result:
             print("Added New Entry")
-            if entry['type'].lower() == "income":
-                self.update_IncomeBar()
-            else:
-                self.update_ExpensesBar()
+            self.update_widgets()
+
+    def update_widgets(self):
+        self.current_money = self.entries.get_total_income()
+        self.WalletButton.configure(text=f"{self.wallet_name}\n{self.current_money} {self.currency}")
+        self.update_IncomeBar()
+        self.update_ExpensesBar()
 
 
 

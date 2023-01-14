@@ -147,6 +147,9 @@ class EntryAdd:
         return d
 
     def is_entry_valid(self) -> bool:
+        self.NameEntry.configure(border_color="gray")
+        self.AmountEntry.configure(border_color="gray")
+
         if self.NameEntry.get() == "":
             self.NameEntry.configure(border_color="red")
             return False
@@ -159,12 +162,7 @@ class EntryAdd:
             self.AmountEntry.configure(border_color="red")
             return False
 
-        self.reset_error_colors()
         return True
-
-    def reset_error_colors(self):
-        self.NameEntry.configure(border_color="gray")
-        self.AmountEntry.configure(border_color="gray")
 
     def reset_entries(self):
         self.NameEntry.delete(0, len(self.NameEntry.get()))
