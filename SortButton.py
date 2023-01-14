@@ -37,7 +37,8 @@ class SortButton:
 
     def reset_focus(self):
         if self.parent.current_button:
-            self.parent.current_button.reset_sort()
+            if not self.parent.current_button == self:
+                self.parent.current_button.reset_sort()
         self.parent.current_button = self
 
     def change_sort(self):
