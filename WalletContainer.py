@@ -28,7 +28,7 @@ class WalletContainer(LinkedList):
         self.wallets: list[BaseWallet] = []
 
         self.WalletFrame = customtkinter.CTkFrame(master=self.master, fg_color="transparent")
-        self.WalletFrame.grid()
+        self.WalletFrame.pack(expand=True, anchor="nw")
 
 
     def add_wallet(self):
@@ -54,6 +54,9 @@ class WalletContainer(LinkedList):
         self.update_wallets()
 
         self.add_dull_wallet()
+
+
+    # ---- Functions ---- #
 
     def add_dull_wallet(self):
         self.append(DullWallet(master=self.WalletFrame,

@@ -1,8 +1,10 @@
 import customtkinter
+
 import FT_Time
 
 from WalletContainer import WalletContainer
-from wallet import Wallet, DullWallet, wallet_colors
+from wallet import Wallet
+from EntryListBox import EntryListBox
 
 from PageButton import PageButton
 from EntryAdd import EntryAdd
@@ -45,6 +47,12 @@ class MainWindow:
         self.WalletFrame.pack(fill="both", expand=True)
 
         self.WalletMaster = WalletContainer(master=self.WalletFrame, parent=self, root=self.root, time=FT_Time.now)
+
+        # Content Frame 2
+        self.EntriesFrame = customtkinter.CTkFrame(master=self.MainFrame)
+        self.EntriesFrame.pack(fill="both", expand=True)
+
+        self.EntriesMaster = EntryListBox(master=self.WalletFrame, parent=self, root=self.root)
 
         self.EntryAdd = EntryAdd(parent=self.MainFrame,
                                  root=self.root,
