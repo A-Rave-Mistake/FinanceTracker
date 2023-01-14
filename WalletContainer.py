@@ -7,8 +7,19 @@ from linkedlist import LinkedList
 
 class WalletContainer(LinkedList):
     def __init__(self, master: customtkinter, parent, root: customtkinter.CTk, time):
-        super().__init__()
+        '''
+        Args:
+            master::customtkinter
+                The container this Wallet belongs to (typically customtkinter.CTkFrame)
+            parent::MainWindow
+                MainWindow reference
+            root::customtkinter.CTk
+                CTk root of the main GUI window (MainWindow class)
+            time::FT_Time.now
+                time.localtime() object from FT_Time file, contains current date
+        '''
 
+        super().__init__()
         self.master = master
         self.parent = parent
         self.root = root

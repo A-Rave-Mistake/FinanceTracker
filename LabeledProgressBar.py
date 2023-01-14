@@ -6,7 +6,7 @@ class LabeledProgressBar:
                  master: customtkinter,
                  root: customtkinter.CTk,
                  text: str,
-                 current_progress: float = 0.5,
+                 current_progress: float = 0.1,
                  max_progress: float = 1.0,
                  **kwargs: Optional):
 

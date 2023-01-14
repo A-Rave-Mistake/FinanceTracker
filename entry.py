@@ -8,12 +8,17 @@ DATE = NewType(('date'), tuple[str, str or int])
 
 # Represents a single value entry that is either classified as 'expense' or 'income'
 class TrackerEntry:
-    def __init__(self, name: str, category, value: float, currency: str):
+    def __init__(self, name: str, category: dict, value: float, currency: str):
         '''
-        :param str name = name of entry as typed by the user
-        :param category = list of categories this entry is labelled by
-        :param float value = positive number if it's an income | negative if it's an expense
-        :param str currency = a str representation of currency, ex. "$USD"
+        Args:
+            name::str
+                Name of entry as typed by the user
+            category::dict
+                Dict representation of Category class
+            value::float
+                Amount of specified currency
+            currency::str
+                Currency
         '''
 
         self.name = name
@@ -42,12 +47,14 @@ class EntryContainer:
 class DateEntry:
     def __init__(self, date: DATE, parent = None):
         '''
-        :param DATE date: = custom type of tuple
-                (str, str or int)
-                first value is a string equal to: 'day', 'month' or 'year'
-                second value can be a str or int, and either represents day, year as int or month's name as a str
-
-        :param parent: = DateEntry object of higher order in terms of date
+        Args:
+            name::DATE - tuple(str, str or int)
+                First value is a string equal to: 'day', 'month' or 'year'
+                Second value can be a str or int, and either represents day, year as int or month's name as a str
+           parent::dict
+                 DateEntry object of higher order in terms of date
+                 ex. a DateEntry instance of param date[0] == 'day' will have a DateEntry parent with date[0] == 'month'
+                 ex2. a DateEntry instance with param 'year' won't have any parent as it is of highest order
         '''
 
         self.date = date

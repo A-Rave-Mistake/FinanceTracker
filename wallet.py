@@ -40,15 +40,22 @@ class Wallet(BaseWallet):
                  row: int = 0,
                  column: int = 0,
                  **kwargs):
-
         '''
-        :param master: the container this Wallet belongs to
-        :param root: CTk root of the main gui window
-        :param year: current real-time year
-        :param name: name of the wallet, by default it's indexed ("Wallet #1", "Wallet #2", etc.)
-        :param currency: currency type this wallet uses
-        :param row, column: wallet widget's location in 'master'
-        :param kwargs: additional parameters for the widget elements
+        Args:
+            master::customtkinter
+                The container this Wallet belongs to (typically customtkinter.CTkFrame)
+            root::customtkinter.CTk
+                CTk root of the main GUI window (MainWindow class)
+            year::int
+                Current real-time year
+            name::str
+                Name of the wallet, by default it's indexed ("Wallet #1", "Wallet #2", etc.)
+            currency::str
+                Currency this wallet uses
+            row::int & column::int
+                Widget component's placement in master widget
+            kwargs::dict
+                Additional parameters for the widget elements
         '''
 
         super().__init__()
@@ -170,11 +177,15 @@ class DullWallet(BaseWallet):
     def __init__(self, master: customtkinter, parent, row: int = 0, column: int = 0):
 
         '''
-            :param master: the container this Wallet belongs to
-            :param parent: WalletContainer object reference
-            :param year: current real-time year
-            :param row, column: widget's location in master
-            :param kwargs: additional parameters for the widget elements
+        Args:
+            master::customtkinter
+                The container this Wallet belongs to (typically customtkinter.CTkFrame)
+            parent::WalletContainer
+                WalletContainer object reference
+            row::int & column::int
+                Widget component's placement in master widget
+            kwargs::dict
+                Additional parameters for the widget elements
         '''
 
         super().__init__()
