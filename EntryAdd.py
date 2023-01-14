@@ -127,6 +127,8 @@ class EntryAdd:
         self.AddButton.grid(row=1)
 
 
+    # ---- Functions ---- #
+
     # Add income/expense entry to the currently selected wallet
     def add_entry(self, *args):
         if self.is_entry_valid():

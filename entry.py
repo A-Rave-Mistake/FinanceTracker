@@ -61,6 +61,10 @@ class DateEntry:
         self.expenseList = EntryContainer()
         self.incomeList = EntryContainer()
 
+
+
+    # ---- Functions ---- #
+
     # Add new entry to the DateEntry object of current year
     # Also tell the correct child element (month) to do the same
     def add_entry(self, kwargs) -> bool:

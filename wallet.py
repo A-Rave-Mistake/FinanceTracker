@@ -120,7 +120,7 @@ class Wallet(BaseWallet):
         self.update_ExpensesBar()
 
 
-
+    # ---- Functions ---- #
 
     def update_ExpensesBar(self):
         self.ExpensesBar.update_progressbar(self.entries.get_total_expenses(), self.target_expense)

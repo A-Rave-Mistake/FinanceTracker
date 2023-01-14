@@ -29,7 +29,7 @@ class LabeledProgressBar:
         self.Progress = customtkinter.CTkProgressBar(master=self.MainFrame,
                                                      progress_color=kwargs.get("progress_color") or "green",
                                                      fg_color=kwargs.get("fg_color") or "green",
-                                                     width=175)
+                                                     width=165)
         self.Progress.grid(row=1,stick="w")
 
         self.Target = customtkinter.CTkLabel(master=self.MainFrame, text="None", font=(("Lato"), 16))

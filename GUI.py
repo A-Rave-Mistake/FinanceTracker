@@ -8,20 +8,14 @@ from PageButton import PageButton
 from EntryAdd import EntryAdd
 
 
-# ---- Variables ---- #
 
-
-
-
-# ---- Classes ---- #
 
 # Main Window
 class MainWindow:
-    def __init__(self, darkmode: bool = True,
-                 geometry: tuple[int, int] = (1000, 700)):
+    def __init__(self, darkmode: bool = True, geometry: tuple[int, int] = (1000, 700)):
 
 
-        # ---- Widget Components ---- #
+        # ---- Widget ---- #
 
         # Root
         self.root = customtkinter.CTk()
