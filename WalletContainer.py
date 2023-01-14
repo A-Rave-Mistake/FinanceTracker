@@ -40,6 +40,7 @@ class WalletContainer(LinkedList):
 
         new_wallet = Wallet(master=self.WalletFrame,
                             root=self.root,
+                            parent=self.parent,
                             name=self.wallet_default_name(),
                             year=self.time.tm_year,
                             currency="$USD",

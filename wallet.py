@@ -3,7 +3,6 @@ import customtkinter
 import FT_Time
 from entry import DateEntry
 from entry import DATE
-from category import Category
 from linkedlist import LinkedList_Element
 from LabeledProgressBar import LabeledProgressBar
 
@@ -34,6 +33,7 @@ class Wallet(BaseWallet):
     def __init__(self,
                  master: customtkinter,
                  root: customtkinter.CTk,
+                 parent,
                  year: int,
                  name: str,
                  currency: str,
@@ -46,6 +46,8 @@ class Wallet(BaseWallet):
                 The container this Wallet belongs to (typically customtkinter.CTkFrame)
             root::customtkinter.CTk
                 CTk root of the main GUI window (MainWindow class)
+            parent::MainWindow
+                MainWindow reference
             year::int
                 Current real-time year
             name::str
@@ -61,6 +63,7 @@ class Wallet(BaseWallet):
         super().__init__()
         self.master: customtkinter = master
         self.root: customtkinter.CTk = root
+        self.parent = parent
         self.row: int = row
         self.column: int = column
 
@@ -162,6 +165,9 @@ class Wallet(BaseWallet):
         else:
             print("Invalid Type")
             return False
+
+        self.parent.EntryAdd.update_categories()
+        return True
 
 
     def category_exists(self, name: str) -> bool:

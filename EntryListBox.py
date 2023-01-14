@@ -46,3 +46,9 @@ class EntryListBox:
         self.ValueButton = SortButton(master=self.TopBar, parent=self, text="Value")
         self.CategoryButton = SortButton(master=self.TopBar, parent=self, text="Category")
         self.DateButton = SortButton(master=self.TopBar, parent=self, text="Date")
+
+
+    # ---- Functions ---- #
+
+    def add_entry(self, entry: TrackerEntry):
+        self.entries.append(entry)

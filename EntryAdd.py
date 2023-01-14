@@ -134,7 +134,7 @@ class EntryAdd:
     def add_entry(self, *args):
         if self.is_entry_valid():
             self.current_wallet.add_entry(self.get_entry_values())
-            self.reset_entries()
+            self.reset_input()
         else:
             print("Failed to add new entry")
             return
@@ -167,7 +167,7 @@ class EntryAdd:
 
         return True
 
-    def reset_entries(self):
+    def reset_input(self):
         self.NameEntry.delete(0, len(self.NameEntry.get()))
         self.AmountEntry.delete(0, len(self.AmountEntry.get()))
 
@@ -186,6 +186,7 @@ class EntryAdd:
         self.WalletDropdown.configure(values=self.wallets)
         self.WalletDropdown.set(self.wallets[0])
         self.current_wallet = None if len(self.walletsO) == 0 else self.walletsO[0]
+        self.current_wallet.add_category(name="Food", type="Income", color="green")
 
     def update_currency(self):
         self.CurrencyLabel.configure(text=self.current_wallet.currency)
@@ -194,8 +195,15 @@ class EntryAdd:
         if self.TypeDropdown.get().lower() == 'income':
             incomeCategories = [vars(item)['name'] for item in self.current_wallet.entries.incomeList.categories]
             self.CategoryDropdown.configure(values=incomeCategories)
-            self.CategoryDropdown.set(incomeCategories[0])
-        else:
+            if len(incomeCategories) > 0:
+                self.CategoryDropdown.set(incomeCategories[0])
+            else:
+                self.CategoryDropdown.set("Default")
+
+        if self.TypeDropdown.get().lower() == 'expense':
             expenseCategories = [vars(item)['name'] for item in self.current_wallet.entries.expenseList.categories]
             self.CategoryDropdown.configure(values=expenseCategories)
-            self.CategoryDropdown.set(expenseCategories[0])
+            if len(expenseCategories) > 0:
+                self.CategoryDropdown.set(expenseCategories[0])
+            else:
+                self.CategoryDropdown.set("Default")
