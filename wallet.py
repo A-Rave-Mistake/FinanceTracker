@@ -3,9 +3,8 @@ import customtkinter
 import FT_Time
 from entry import DateEntry
 from entry import DATE
-
+from category import Category
 from linkedlist import LinkedList_Element
-
 from LabeledProgressBar import LabeledProgressBar
 
 
@@ -66,10 +65,14 @@ class Wallet(BaseWallet):
         self.time = FT_Time.now
         self.months = [FT_Time.months[month] for month in range(1, self.time.tm_mon+1)]
 
+        self.categories: list[dict] = [] # List of Category.__dict__ elements
+
         # Current year, contains months as children according to real time
         self.entries: DateEntry = DateEntry(DATE(("year", self.current_year)))
+
         # Create a month DateEntry for every month that has already occured in this year
         self.entries.create_months(self.months)
+
         # Create a day DateEntry for every day elapsed in current month
         for child in self.entries.children:
             month = child.date[1]
@@ -119,6 +122,9 @@ class Wallet(BaseWallet):
 
         self.update_ExpensesBar()
 
+        self.add_category('Food', 'green')
+        self.add_category('Food', 'green')
+
 
     # ---- Functions ---- #
 
@@ -136,6 +142,19 @@ class Wallet(BaseWallet):
         if result:
             print("Added New Entry")
             self.update_widgets()
+
+    def add_category(self, name: str, color: str):
+        if self.category_exists(name):
+            print("The category already exists!")
+            return
+        else:
+            self.categories.append(vars(Category(self, name, color)))
+
+    def category_exists(self, name: str) -> bool:
+        if name in [cat['name'] for cat in self.categories]:
+            return True
+        else:
+            return False
 
     def update_widgets(self):
         self.current_money = self.entries.get_total_income()
