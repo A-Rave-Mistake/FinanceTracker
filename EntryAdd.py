@@ -136,6 +136,7 @@ class EntryAdd:
             print("Failed to add new entry")
             return
 
+    # Get all values inserted by the user and return them as a dictionary
     def get_entry_values(self) -> dict:
         d = {}
         d['name'] = self.NameEntry.get()

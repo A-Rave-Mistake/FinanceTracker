@@ -47,6 +47,8 @@ class Wallet(BaseWallet):
         :param root: CTk root of the main gui window
         :param year: current real-time year
         :param name: name of the wallet, by default it's indexed ("Wallet #1", "Wallet #2", etc.)
+        :param currency: currency type this wallet uses
+        :param row, column: wallet widget's location in 'master'
         :param kwargs: additional parameters for the widget elements
         '''
 
@@ -139,15 +141,27 @@ class Wallet(BaseWallet):
 
 
 
-# This functions as a button to create new Wallet object
+# Functions as a button to create a new Wallet
+# Unusable on it's own
 class DullWallet(BaseWallet):
     def __init__(self, master: customtkinter, parent, row: int = 0, column: int = 0):
+
+        '''
+            :param master: the container this Wallet belongs to
+            :param parent: WalletContainer object reference
+            :param year: current real-time year
+            :param row, column: widget's location in master
+            :param kwargs: additional parameters for the widget elements
+        '''
 
         super().__init__()
         self.master = master
         self.parent = parent
         self.row = row
         self.column = column
+
+
+        # ---- Widget ---- #
 
         self.MainFrame = customtkinter.CTkFrame(master=self.master, fg_color="transparent")
         self.MainFrame.grid(row=self.row, column=self.column, sticky="wn", padx=5, pady=5)
