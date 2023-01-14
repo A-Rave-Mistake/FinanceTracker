@@ -129,9 +129,6 @@ class Wallet(BaseWallet):
 
         self.update_ExpensesBar()
 
-        self.add_category('Food', 'green', 'expense')
-        self.add_category('Food', 'green', 'expense')
-
 
     # ---- Functions ---- #
 
@@ -150,12 +147,22 @@ class Wallet(BaseWallet):
             print("Added New Entry")
             self.update_widgets()
 
-    def add_category(self, name: str, color: str, type: str):
-        if self.category_exists(name):
+    def add_category(self, **kwargs) -> bool:
+        if self.category_exists(kwargs.get('name')):
             print("The category already exists!")
-            return
+            return False
+
+        if kwargs.get('type').lower() == "income":
+            print(self.entries.incomeList.add_category(kwargs))
+        elif kwargs.get('type').lower() == "expense":
+            print(self.entries.expenseList.add_category(kwargs))
+        elif kwargs.get('type').lower() == "both":
+            print(self.entries.incomeList.add_category(kwargs))
+            print(self.entries.expenseList.add_category(kwargs))
         else:
-            self.categories.append(vars(Category(self, name, color, type)))
+            print("Invalid Type")
+            return False
+
 
     def category_exists(self, name: str) -> bool:
         if name in [cat['name'] for cat in self.categories]:

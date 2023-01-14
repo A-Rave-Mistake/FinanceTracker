@@ -1,6 +1,7 @@
 from typing import NewType
 
 import FT_Time
+from category import Category
 
 
 DATE = NewType(('date'), tuple[str, str or int])
@@ -33,10 +34,26 @@ class TrackerEntry:
 class EntryContainer:
     def __init__(self):
         self.entries: list[TrackerEntry] = []
+        self.categories: list[Category] = []
 
     def add_entry(self, item: TrackerEntry) -> list[TrackerEntry]:
         self.entries.append(item)
         return self.entries
+
+    def add_category(self, kwargs) -> bool:
+        if self.category_exists(kwargs.get('name')):
+            return False
+        else:
+            new_category = Category(self, kwargs.get('name'), kwargs.get('color'), kwargs.get('type'))
+            self.categories.append(new_category)
+            print(f"{kwargs['name']} [{kwargs['type']}]")
+            return True
+
+    def category_exists(self, name: str) -> bool:
+        if name in [vars(cat)['name'] for cat in self.categories]:
+            return True
+        else:
+            return False
 
     def get_total(self) -> float:
         return sum([entry.value for entry in self.entries])

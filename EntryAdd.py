@@ -83,7 +83,8 @@ class EntryAdd:
                                                         font=(("Lato"), 17),
                                                         bg_color="transparent",
                                                         width=35,
-                                                        corner_radius=5)
+                                                        corner_radius=5,
+                                                        command=self.update_categories)
 
         self.TypeDropdown.grid(row=1)
 
@@ -97,7 +98,7 @@ class EntryAdd:
         self.CategoryLabel.grid(row=0, sticky="w")
 
         self.CategoryDropdown = customtkinter.CTkOptionMenu(master=self.CategoryFrame,
-                                                    values=["Food", "Rent", "Car", "Bills", "Gifts"],
+                                                    values=['Category'],
                                                     font=(("Lato"), 17),
                                                     bg_color="transparent",
                                                     width=35,
@@ -173,6 +174,7 @@ class EntryAdd:
     def set_current_wallet(self, *args):
         self.current_wallet = self.find_wallet()[1]
         self.update_currency()
+        self.update_categories()
 
     def find_wallet(self) -> tuple[int, object]:
         for wallet in self.walletsO:
@@ -187,3 +189,13 @@ class EntryAdd:
 
     def update_currency(self):
         self.CurrencyLabel.configure(text=self.current_wallet.currency)
+
+    def update_categories(self, *args):
+        if self.TypeDropdown.get().lower() == 'income':
+            incomeCategories = [vars(item)['name'] for item in self.current_wallet.entries.incomeList.categories]
+            self.CategoryDropdown.configure(values=incomeCategories)
+            self.CategoryDropdown.set(incomeCategories[0])
+        else:
+            expenseCategories = [vars(item)['name'] for item in self.current_wallet.entries.expenseList.categories]
+            self.CategoryDropdown.configure(values=expenseCategories)
+            self.CategoryDropdown.set(expenseCategories[0])
