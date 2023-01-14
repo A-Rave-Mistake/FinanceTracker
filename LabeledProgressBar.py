@@ -10,12 +10,12 @@ class LabeledProgressBar:
                  max_progress: float = 1.0,
                  **kwargs: Optional):
 
-        self.root = root
-        self.master = master
+        self.master: customtkinter = master
+        self.root: customtkinter.CTk = root
 
-        self.text = text
-        self.current_progress = current_progress
-        self.max_progress = max_progress
+        self.text: str = text
+        self.current_progress: float = current_progress
+        self.max_progress: float = max_progress
 
 
         # ---- Widget ----#

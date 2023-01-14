@@ -59,15 +59,15 @@ class Wallet(BaseWallet):
         '''
 
         super().__init__()
-        self.master = master
-        self.root = root
-        self.row = row
-        self.column = column
+        self.master: customtkinter = master
+        self.root: customtkinter.CTk = root
+        self.row: int = row
+        self.column: int = column
 
         # Wallet Info
-        self.wallet_name = name
-        self.currency = currency
-        self.current_year = year
+        self.wallet_name: str = name
+        self.currency: str = currency
+        self.current_year: int = year
 
         self.time = FT_Time.now
         self.months = [FT_Time.months[month] for month in range(1, self.time.tm_mon+1)]
@@ -89,9 +89,9 @@ class Wallet(BaseWallet):
                 child.create_days(self.time.tm_mday)
 
         # Money
-        self.current_money = 0.0
-        self.target_expense = 1000.0
-        self.target_income = 1000.0
+        self.current_money: float = 0.0
+        self.target_expense: float = 1000.0
+        self.target_income: float = 1000.0
 
 
         # ---- Widget ---- #
@@ -129,8 +129,8 @@ class Wallet(BaseWallet):
 
         self.update_ExpensesBar()
 
-        self.add_category('Food', 'green')
-        self.add_category('Food', 'green')
+        self.add_category('Food', 'green', 'expense')
+        self.add_category('Food', 'green', 'expense')
 
 
     # ---- Functions ---- #
@@ -150,12 +150,12 @@ class Wallet(BaseWallet):
             print("Added New Entry")
             self.update_widgets()
 
-    def add_category(self, name: str, color: str):
+    def add_category(self, name: str, color: str, type: str):
         if self.category_exists(name):
             print("The category already exists!")
             return
         else:
-            self.categories.append(vars(Category(self, name, color)))
+            self.categories.append(vars(Category(self, name, color, type)))
 
     def category_exists(self, name: str) -> bool:
         if name in [cat['name'] for cat in self.categories]:
@@ -189,10 +189,10 @@ class DullWallet(BaseWallet):
         '''
 
         super().__init__()
-        self.master = master
+        self.master: customtkinter = master
         self.parent = parent
-        self.row = row
-        self.column = column
+        self.row: int = row
+        self.column: int = column
 
 
         # ---- Widget ---- #

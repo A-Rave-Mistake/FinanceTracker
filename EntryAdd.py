@@ -9,10 +9,10 @@ class EntryAdd:
                  MainWindow,
                  wallets: list):
 
-        self.parent = parent
-        self.root = root
-        self.wallets = [wallet.wallet_name for wallet in wallets]
-        self.walletsO = wallets
+        self.parent: customtkinter = parent
+        self.root: customtkinter.CTk = root
+        self.wallets: list = [wallet.wallet_name for wallet in wallets]
+        self.walletsO: list = wallets
 
         self.current_wallet = None
 

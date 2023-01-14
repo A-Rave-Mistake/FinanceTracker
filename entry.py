@@ -57,7 +57,7 @@ class DateEntry:
                  ex2. a DateEntry instance with param 'year' won't have any parent as it is of highest order
         '''
 
-        self.date = date
+        self.date: DATE = date
         self.parent: DateEntry = parent
 
         # Contains all date units of lesser order

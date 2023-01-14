@@ -20,9 +20,9 @@ class WalletContainer(LinkedList):
         '''
 
         super().__init__()
-        self.master = master
+        self.master: customtkinter = master
         self.parent = parent
-        self.root = root
+        self.root: customtkinter.CTk = root
         self.time = time
 
         self.wallets: list[BaseWallet] = []
