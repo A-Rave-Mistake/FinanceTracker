@@ -11,6 +11,8 @@ class EntryListBox:
                 Parent widget element
             parent::Any Object
                 The parent object this list belongs to
+            row::int & column::int
+                Position of widget component in parent widget
         '''
 
         self.master: customtkinter = master
