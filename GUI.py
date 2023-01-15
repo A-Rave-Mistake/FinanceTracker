@@ -5,7 +5,7 @@ import FT_Time
 from WalletContainer import WalletContainer
 from wallet import Wallet
 from EntryListBox import EntryListBox
-
+from WidgetSwitcher import WidgetSwitcher
 from PageButton import PageButton
 from EntryAdd import EntryAdd
 
@@ -37,22 +37,33 @@ class MainWindow:
         self.TopFrame = customtkinter.CTkFrame(master=self.MainFrame, width=10, height=10)
         self.TopFrame.pack(pady=20, padx=20, fill="x", anchor="n")
 
-        self.HomeButton = PageButton(self, self.TopFrame, "HOME", selected=True)
-        self.WalletsButton = PageButton(self, self.TopFrame, "WALLETS", selected=False, SelectLabel_width=100)
+        # Top Buttons
+        self.HomeButton = PageButton(self, self.TopFrame, "HOME", selected=True,
+                                        command=self.show_entries)
+
+        self.WalletsButton = PageButton(self, self.TopFrame,
+                                        "WALLETS",
+                                        selected=False,
+                                        SelectLabel_width=100,
+                                        command=self.show_wallets)
 
         self.selectedButton = self.HomeButton
 
         # Content Frame
+        self.Content = WidgetSwitcher(self.root, [])
+
         self.WalletFrame = customtkinter.CTkFrame(master=self.MainFrame)
         self.WalletFrame.pack(fill="both", expand=True)
 
         self.WalletMaster = WalletContainer(master=self.WalletFrame, parent=self, root=self.root, time=FT_Time.now)
 
-        # Content Frame 2
-        self.EntriesFrame = customtkinter.CTkFrame(master=self.MainFrame)
-        self.EntriesFrame.pack(fill="both", expand=True)
+        self.WalletMaster.WalletFrame.pack_forget()
+        self.Content.add_widget(object_ref=self.WalletMaster.WalletFrame, packing="pack", expand=True, anchor="nw")
 
         self.EntriesMaster = EntryListBox(master=self.WalletFrame, parent=self, root=self.root)
+
+        self.EntriesMaster.MainFrame.pack_forget()
+        self.Content.add_widget(self.EntriesMaster.MainFrame, "pack", expand=True, fill="x", side="left", anchor="n")
 
         self.EntryAdd = EntryAdd(parent=self.MainFrame,
                                  root=self.root,
@@ -61,6 +72,8 @@ class MainWindow:
 
 
         self.add_wallet()
+
+        self.Content.switch_to_index(1)
 
         self.root.mainloop()
 
@@ -72,3 +85,9 @@ class MainWindow:
 
     def update_wallets(self, wallets: list[Wallet]):
         self.EntryAdd.update_wallet_list(wallets)
+
+    def show_wallets(self, *args):
+        self.Content.switch_to(self.WalletMaster.WalletFrame)
+
+    def show_entries(self, *args):
+        self.Content.switch_to(self.EntriesMaster.MainFrame)
