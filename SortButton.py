@@ -21,7 +21,7 @@ class SortButton:
         self.sort_type: str = "none"
 
         self.MainFrame = customtkinter.CTkFrame(master=self.master, fg_color="transparent")
-        self.MainFrame.pack(side="left", expand=True, fill="x", padx=2)
+        self.MainFrame.pack(side="left", expand=True, fill="x")
 
         self.Button = customtkinter.CTkButton(master=self.MainFrame,
                                                   text=self.text,

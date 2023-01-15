@@ -4,7 +4,7 @@ import FT_Time
 
 from WalletContainer import WalletContainer
 from wallet import Wallet
-from EntryListBox import EntryListBox
+from ListTest import EntryListBox
 from WidgetSwitcher import WidgetSwitcher
 from PageButton import PageButton
 from EntryAdd import EntryAdd
@@ -65,7 +65,10 @@ class MainWindow:
         self.EntriesMaster.MainFrame.pack_forget()
         self.Content.add_widget(self.EntriesMaster.MainFrame, "pack", expand=True, fill="x", side="left", anchor="n")
 
-        self.EntryAdd = EntryAdd(parent=self.MainFrame,
+        self.EntryFrame = customtkinter.CTkFrame(self.MainFrame, height=200)
+        self.EntryFrame.pack(anchor="s", fill="x")
+
+        self.EntryAdd = EntryAdd(parent=self.EntryFrame,
                                  root=self.root,
                                  MainWindow=self,
                                  wallets=self.WalletMaster.wallets)
