@@ -36,7 +36,7 @@ class EntryListElement:
         self.TypeLabel.pack(expand=True, fill="x", side="left")
 
         self.ValueLabel = customtkinter.CTkLabel(master=self.MainFrame,
-                                               text=str(self.entry.value),
+                                               text=f"{self.entry.value} {self.entry.currency}",
                                                corner_radius=0,
                                                font=(("Lato"), 15))
         self.ValueLabel.pack(expand=True, fill="x", side="left")
