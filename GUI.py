@@ -50,7 +50,7 @@ class MainWindow:
 
         self.selectedButton = self.HomeButton
 
-        self.WalletSelect = SpinBox(self.MainFrame, self.root, None)
+        self.WalletSelect = SpinBox(self.MainFrame, self.root)
 
         # Content Frame
         self.Content = WidgetSwitcher(self.root, [])
