@@ -56,32 +56,3 @@ class WidgetSwitcher:
 
     def add_widget(self, object_ref: customtkinter, packing: str, **options):
         self.widgets.append({"object": object_ref, "packing": packing, "options": options})
-        
-        
-class SwitcherSpinBox(WidgetSwitcher):
-    def __init__(self, master: customtkinter, root: customtkinter.CTk, widgets: list):
-        super().__init__(root, widgets)
-
-        self.master: customtkinter = master
-
-        self.selection_values: list[str] = []
-
-
-        # ---- Widgets ---- #
-
-        self.MainFrame = customtkinter.CTkFrame(master=self.master, fg_color="transparent", height=100)
-        self.MainFrame.pack(anchor="n")
-
-        self.LeftButton = customtkinter.CTkButton(master=self.MainFrame, text="<", width=10, font=(("Lato"), 20))
-        self.LeftButton.pack(expand=True,side="left")
-
-        self.SelectionLabel = customtkinter.CTkLabel(master=self.MainFrame, text="Selection", font=(("Lato"), 18))
-        self.SelectionLabel.pack(expand=True,side="left", padx=20)
-
-        self.RightButton = customtkinter.CTkButton(master=self.MainFrame, text=">", width=10, font=(("Lato"), 20))
-        self.RightButton.pack(expand=True,side="left")
-        
-        
-    def add_widget(self, object_ref: customtkinter, packing: str, **options):
-        super(SwitcherSpinBox, self).add_widget(object_ref, packing)
-        self.selection_values.append(options.get('selection'))

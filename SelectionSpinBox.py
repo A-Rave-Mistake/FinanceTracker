@@ -2,6 +2,13 @@ import customtkinter
 
 class SpinBox():
     def __init__(self, master: customtkinter, root: customtkinter.CTk):
+        """
+        Args:
+            msater::customtkinter
+                Parent widget
+            root::customtkinter.CTk
+                Root window reference
+        """
 
         self.master: customtkinter = master
         self.root = root
@@ -32,6 +39,9 @@ class SpinBox():
                                                    font=(("Lato"), 20),
                                                    command=self.next_selection)
         self.RightButton.pack(expand=True, side="left")
+
+
+    # ---- Functions ---- #
 
     def add_widget(self, value: str):
         self.selection_values.append(value)
