@@ -4,7 +4,7 @@ import FT_Time
 from entry import DateEntry
 from entry import DATE
 from linkedlist import LinkedList_Element
-from LabeledProgressBar import LabeledProgressBar
+from LabeledProgressBar import LabeledProgressBar, LabeledProgressBar_Target
 
 
 wallet_colors: list[tuple[str, str]] = [("#32a852","#42bd63"),
@@ -116,19 +116,21 @@ class Wallet(BaseWallet):
         self.WalletButton.grid()
 
 
-        self.IncomeBar = LabeledProgressBar(master=self.MainFrame,
-                                            root=self.root,
-                                            text="Income",
-                                            progress_color="#48c746",
-                                            fg_color="#7fab7e")
+        self.IncomeBar = LabeledProgressBar_Target(master=self.MainFrame,
+                                                   root=self.root,
+                                                   text="Income",
+                                                   progress_color="#48c746",
+                                                   fg_color="#7fab7e",
+                                                   currency=self.currency)
 
         self.update_IncomeBar()
 
-        self.ExpensesBar = LabeledProgressBar(master=self.MainFrame,
-                                            root=self.root,
-                                            text="Expenses",
-                                            progress_color="#cf413e",
-                                            fg_color="#874646")
+        self.ExpensesBar = LabeledProgressBar_Target(master=self.MainFrame,
+                                                     root=self.root,
+                                                     text="Expenses",
+                                                     progress_color="#cf413e",
+                                                     fg_color="#874646",
+                                                     currency=self.currency)
 
         self.update_ExpensesBar()
 

@@ -6,7 +6,8 @@ class LabeledProgressBar:
                  master: customtkinter,
                  root: customtkinter.CTk,
                  text: str,
-                 current_progress: float = 0.1,
+                 currency: str,
+                 current_progress: float = 0.0,
                  max_progress: float = 1.0,
                  **kwargs: Optional):
 
@@ -14,6 +15,7 @@ class LabeledProgressBar:
         self.root: customtkinter.CTk = root
 
         self.text: str = text
+        self.currency = currency
         self.current_progress: float = current_progress
         self.max_progress: float = max_progress
 
@@ -49,3 +51,22 @@ class LabeledProgressBar:
 
     def format_progress_text(self, current: float, target: float, currency: str):
         self.Target.configure(text=f"{current} {currency}")
+
+
+
+# Similiar to parent but has additional label widget underneath progress bar widget
+class LabeledProgressBar_Target(LabeledProgressBar):
+    def __init__(self, master: customtkinter, root: customtkinter.CTk, text: str, **kwargs: Optional):
+        super().__init__(master, root, text, **kwargs)
+
+        self.TargetProgress = customtkinter.CTkLabel(master=self.MainFrame,
+                                                     text=f"{self.current_progress} / {self.max_progress}",
+                                                     font=(("Lato"), 15))
+        self.TargetProgress.grid(row=2, column=0, columnspan=3, stick="w")
+        
+    def update_progressbar(self, value: float, target: float):
+        super(LabeledProgressBar_Target, self).update_progressbar(value, target)
+        self.update_target_progress(value, target)
+
+    def update_target_progress(self, current: float, target: float):
+        self.TargetProgress.configure(text=f"{current} / {target} {self.currency}")
