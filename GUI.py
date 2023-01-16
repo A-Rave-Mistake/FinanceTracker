@@ -6,6 +6,7 @@ from WalletContainer import WalletContainer
 from wallet import Wallet
 from EntryListBox import EntryListBox
 from WidgetSwitcher import WidgetSwitcher
+from SelectionSpinBox import SpinBox
 from PageButton import PageButton
 from EntryAdd import EntryAdd
 
@@ -49,10 +50,13 @@ class MainWindow:
 
         self.selectedButton = self.HomeButton
 
+        self.WalletSelect = SpinBox(self.MainFrame, self.root, None)
+
         # Content Frame
         self.Content = WidgetSwitcher(self.root, [])
 
-        self.WalletFrame = customtkinter.CTkFrame(master=self.MainFrame)
+            # Wallet List
+        self.WalletFrame = customtkinter.CTkFrame(master=self.MainFrame, fg_color="transparent")
         self.WalletFrame.pack(fill="both", expand=True)
 
         self.WalletMaster = WalletContainer(master=self.WalletFrame, parent=self, root=self.root, time=FT_Time.now)
@@ -60,11 +64,15 @@ class MainWindow:
         self.WalletMaster.WalletFrame.pack_forget()
         self.Content.add_widget(object_ref=self.WalletMaster.WalletFrame, packing="pack", expand=True, anchor="nw")
 
+        self.WalletSelect.WidgetSwitcher = self.Content
+
+        # Recent Entries List
         self.EntriesMaster = EntryListBox(master=self.WalletFrame, parent=self, root=self.root)
 
         self.EntriesMaster.MainFrame.pack_forget()
         self.Content.add_widget(self.EntriesMaster.MainFrame, "pack", expand=True, fill="x", side="left", anchor="n")
 
+        # Quick Entry Add
         self.EntryFrame = customtkinter.CTkFrame(self.MainFrame, height=200)
         self.EntryFrame.pack(anchor="s", fill="x")
 
@@ -75,6 +83,7 @@ class MainWindow:
 
 
         self.add_wallet()
+        self.WalletSelect.selection_at(0)
 
         self.Content.switch_to_index(1)
 
@@ -84,13 +93,20 @@ class MainWindow:
     # ---- Functions ---- #
 
     def add_wallet(self):
-        self.WalletMaster.add_wallet()
+        new_wallet = self.WalletMaster.add_wallet()
 
     def update_wallets(self, wallets: list[Wallet]):
         self.EntryAdd.update_wallet_list(wallets)
+        self.update_wallet_select()
 
     def show_wallets(self, *args):
         self.Content.switch_to(self.WalletMaster.WalletFrame)
 
     def show_entries(self, *args):
         self.Content.switch_to(self.EntriesMaster.MainFrame)
+
+    def update_wallet_select(self):
+        self.WalletSelect.selection_values = []
+        for x in self.WalletMaster.wallets:
+            self.WalletSelect.add_widget(x.wallet_name)
+        self.WalletSelect.selection_at(0)
