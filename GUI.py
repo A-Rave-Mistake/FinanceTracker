@@ -4,7 +4,7 @@ import FT_Time
 
 from WalletContainer import WalletContainer
 from wallet import Wallet
-from ListTest import EntryListBox
+from EntryListBox import EntryListBox
 from WidgetSwitcher import WidgetSwitcher
 from PageButton import PageButton
 from EntryAdd import EntryAdd
