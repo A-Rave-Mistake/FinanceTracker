@@ -173,13 +173,13 @@ class EntryAdd:
         self.AmountEntry.delete(0, len(self.AmountEntry.get()))
 
     def set_current_wallet(self, *args):
-        self.current_wallet = self.find_wallet()[1]
+        self.current_wallet = self.find_wallet(self.WalletDropdown.get())[1]
         self.update_currency()
         self.update_categories()
 
-    def find_wallet(self, wallet_name: str = None) -> tuple[int, object]:
+    def find_wallet(self, wallet_name: str) -> tuple[int, object]:
         for wallet in self.walletsO:
-            if wallet.wallet_name == wallet_name or self.WalletDropdown.get():
+            if wallet.wallet_name == wallet_name:
                 return (self.walletsO.index(wallet), wallet)
 
     def set_wallet(self, index: int):

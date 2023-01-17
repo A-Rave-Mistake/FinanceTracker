@@ -1,13 +1,15 @@
 import customtkinter
 
 class SpinBox():
-    def __init__(self, master: customtkinter, root: customtkinter.CTk):
+    def __init__(self, master: customtkinter, root: customtkinter.CTk, callables: list[callable]=None):
         """
         Args:
             msater::customtkinter
                 Parent widget
             root::customtkinter.CTk
                 Root window reference
+            callables::list[callable]
+                List of functions that will execute when self.on_selection_change is triggered
         """
 
         self.master: customtkinter = master
@@ -15,6 +17,8 @@ class SpinBox():
 
         self.selection_values: list[str] = []
         self.selection_index = 0
+
+        self.callables: callable = callables or []
 
         # ---- Widgets ---- #
 
@@ -53,6 +57,8 @@ class SpinBox():
         self.selection_index -= 1
         self.SelectionLabel.configure(text=self.selection_values[self.selection_index])
 
+        self.on_selection_change()
+
     def next_selection(self):
         if self.selection_index == len(self.selection_values)-1:
             return
@@ -60,9 +66,15 @@ class SpinBox():
         self.selection_index += 1
         self.SelectionLabel.configure(text=self.selection_values[self.selection_index])
 
+        self.on_selection_change()
+
     def selection_at(self, index: int):
         if index > len(self.selection_values)-1:
             return
 
         self.selection_index = index
         self.SelectionLabel.configure(text=self.selection_values[self.selection_index])
+
+    def on_selection_change(self):
+        for item in self.callables:
+            item(self.selection_index)

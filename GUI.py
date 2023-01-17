@@ -74,7 +74,7 @@ class MainWindow:
         self.Test = customtkinter.CTkFrame(self.ContentFrame, fg_color="transparent")
         self.Test.pack(fill="both", expand=True)
 
-        self.WalletSelect = SpinBox(self.Test, self.root)
+        self.WalletSelect = SpinBox(self.Test, self.root, callables=[self.on_WalletSelect_change])
         self.WalletSelect.WidgetSwitcher = self.Content
 
         self.EntriesMaster = EntryListBox(master=self.Test, parent=self, root=self.root)
@@ -127,4 +127,6 @@ class MainWindow:
         self.EntriesMaster.load_entries(wallet.entries.get_all_entries())
         self.EntryAdd.set_wallet(index)
         self.WalletSelect.selection_at(index)
-        print(wallet.wallet_name)
+
+    def on_WalletSelect_change(self, index: int):
+        self.go_to_wallet(self.WalletMaster.wallets[index], index)
