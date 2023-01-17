@@ -177,10 +177,21 @@ class EntryAdd:
         self.update_currency()
         self.update_categories()
 
-    def find_wallet(self) -> tuple[int, object]:
+    def find_wallet(self, wallet_name: str = None) -> tuple[int, object]:
         for wallet in self.walletsO:
-            if wallet.wallet_name == self.WalletDropdown.get():
+            if wallet.wallet_name == wallet_name or self.WalletDropdown.get():
                 return (self.walletsO.index(wallet), wallet)
+
+    def set_wallet(self, index: int):
+        if index < 0 or index > len(self.wallets)-1:
+            return -1
+
+        wallet = self.walletsO[index]
+
+        self.current_wallet = wallet
+        self.update_currency()
+        self.update_categories()
+        self.WalletDropdown.set(self.wallets[index])
 
     def update_wallet_list(self, wallets):
         self.wallets  = [wallet.wallet_name for wallet in wallets]

@@ -44,6 +44,7 @@ class WalletContainer(LinkedList):
                             name=self.wallet_default_name(),
                             year=self.time.tm_year,
                             currency="$USD",
+                            index=len(self.wallets),
                             wallet_color=wcolor[0],
                             border_color=wcolor[1],
                             row=self.get_row(),

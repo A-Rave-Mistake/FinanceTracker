@@ -120,3 +120,11 @@ class MainWindow:
         for x in self.WalletMaster.wallets:
             self.WalletSelect.add_widget(x.wallet_name)
         self.WalletSelect.selection_at(self.WalletSelect.selection_index or 0)
+
+    def go_to_wallet(self, wallet, index: int):
+        self.show_entries()
+        self.HomeButton.set_selected()
+        self.EntriesMaster.load_entries(wallet.entries.get_all_entries())
+        self.EntryAdd.set_wallet(index)
+        self.WalletSelect.selection_at(index)
+        print(wallet.wallet_name)

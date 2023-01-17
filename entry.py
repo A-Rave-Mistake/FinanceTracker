@@ -160,6 +160,9 @@ class DateEntry:
     def get_total_income(self) -> float:
         return self.incomeList.get_total()
 
+    def get_all_entries(self) -> list[TrackerEntry]:
+        return self.incomeList.entries + self.expenseList.entries
+
     # Should only be used if the instance of DataEntry is of 'year' type
     def create_months(self, months):
         self.children = [DateEntry(DATE(("month", month)), parent=self) for month in months]

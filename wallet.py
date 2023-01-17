@@ -37,6 +37,7 @@ class Wallet(BaseWallet):
                  year: int,
                  name: str,
                  currency: str,
+                 index: int,
                  row: int = 0,
                  column: int = 0,
                  **kwargs):
@@ -71,6 +72,7 @@ class Wallet(BaseWallet):
         self.wallet_name: str = name
         self.currency: str = currency
         self.current_year: int = year
+        self.index: int = index
 
         self.time = FT_Time.now
         self.months = [FT_Time.months[month] for month in range(1, self.time.tm_mon+1)]
@@ -112,7 +114,8 @@ class Wallet(BaseWallet):
                                                     border_color=kwargs.get("border_color") or wallet_colors[0][1],
                                                     border_width=4,
                                                     hover_color=kwargs.get("border_color") or wallet_colors[0][1],
-                                                    anchor="sw")
+                                                    anchor="sw",
+                                                    command=self.go_to_wallet)
         self.WalletButton.grid()
 
 
@@ -172,7 +175,6 @@ class Wallet(BaseWallet):
         self.parent.EntryAdd.update_categories()
         return True
 
-
     def category_exists(self, name: str) -> bool:
         if name in [cat['name'] for cat in self.categories]:
             return True
@@ -184,6 +186,9 @@ class Wallet(BaseWallet):
         self.WalletButton.configure(text=f"{self.wallet_name}\n{self.current_money} {self.currency}")
         self.update_IncomeBar()
         self.update_ExpensesBar()
+
+    def go_to_wallet(self):
+        self.parent.go_to_wallet(self, self.index)
 
 
 

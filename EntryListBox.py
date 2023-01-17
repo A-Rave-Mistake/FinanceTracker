@@ -126,3 +126,16 @@ class EntryListBox:
     def update(self):
         self.root.update_idletasks()
         self.Canvas.configure(scrollregion=self.Canvas.bbox('all'))
+
+    def load_entries(self, entries: list[TrackerEntry]):
+        self.clear_entries()
+
+        for entry in entries:
+            self.add_entry(entry)
+        self.update()
+
+    def clear_entries(self):
+        self.entries.clear()
+        for child in self.EntryList.winfo_children():
+            child.destroy()
+        self.update()
