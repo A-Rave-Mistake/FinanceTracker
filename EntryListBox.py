@@ -80,7 +80,7 @@ class EntryListBox:
         # ---- Widget ---- #
 
         self.MainFrame = customtkinter.CTkFrame(master=self.master, fg_color="transparent", height=800)
-        self.MainFrame.grid(sticky="news", columnspan=10, rowspan=10)
+        self.MainFrame.pack(fill="both", expand=True)
         self.MainFrame.columnconfigure(0, weight=2)
         self.MainFrame.rowconfigure(0, weight=2)
 

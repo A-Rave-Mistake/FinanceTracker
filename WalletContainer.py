@@ -28,7 +28,7 @@ class WalletContainer(LinkedList):
         self.wallets: list[BaseWallet] = []
 
         self.WalletFrame = customtkinter.CTkFrame(master=self.master, fg_color="transparent")
-        self.WalletFrame.pack(expand=True, anchor="nw")
+        self.WalletFrame.pack(fill="both", expand=True)
 
 
     def add_wallet(self):
