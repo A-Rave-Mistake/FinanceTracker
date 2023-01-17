@@ -3,6 +3,7 @@ from tkinter import *
 
 from entry import TrackerEntry
 from SortButton import SortButton
+from RadioToggle import RadioToggle
 
 
 class EntryListElement:
@@ -79,7 +80,7 @@ class EntryListBox:
 
         # ---- Widget ---- #
 
-        self.MainFrame = customtkinter.CTkFrame(master=self.master, fg_color="transparent", height=800)
+        self.MainFrame = customtkinter.CTkFrame(master=self.master, fg_color="transparent", height=790)
         self.MainFrame.pack(fill="both", expand=True)
         self.MainFrame.columnconfigure(0, weight=2)
         self.MainFrame.rowconfigure(0, weight=2)
@@ -91,10 +92,16 @@ class EntryListBox:
                                                text="Recent Entries",
                                                font=(("Lato"), 20, "bold"),
                                                padx=5)
-        self.TopLabel.grid(sticky="w", row=0)
+        self.TopLabel.grid(row=0, sticky="w")
+
+        self.FilterToggle = RadioToggle(master=self.TopBar1,
+                          root=self.parent.root,
+                          parent=self.parent,
+                          values=[("All", 0), ("Expense", 1), ("Income", 2)],
+                          row=1)
 
         self.TopBar = customtkinter.CTkFrame(master=self.MainFrame, fg_color="transparent")
-        self.TopBar.grid(sticky="we", row=1)
+        self.TopBar.grid(sticky="we", row=2)
 
         self.WalletButton = SortButton(master=self.TopBar, parent=self, text="Wallet", column=0)
         self.NameButton = SortButton(master=self.TopBar, parent=self, text="Name", column=1)
@@ -103,7 +110,7 @@ class EntryListBox:
         self.CategoryButton = SortButton(master=self.TopBar, parent=self, text="Category", column=4)
         self.DateButton = SortButton(master=self.TopBar, parent=self, text="Date", column=5)
 
-        self.Canvas = customtkinter.CTkCanvas(self.MainFrame, bg="#212024", bd=0, highlightthickness=0, height=750)
+        self.Canvas = customtkinter.CTkCanvas(self.MainFrame, bg="#212024", bd=0, highlightthickness=0, height=740)
         self.Canvas.grid(sticky="news", row=2)
 
         self.Scrollbar = customtkinter.CTkScrollbar(self.MainFrame, orientation="vertical", command=self.Canvas.yview)
