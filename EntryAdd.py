@@ -133,6 +133,7 @@ class EntryAdd:
     # Add income/expense entry to the currently selected wallet
     def add_entry(self, *args):
         if self.is_entry_valid():
+            print(self.current_wallet.wallet_name)
             self.current_wallet.add_entry(self.get_entry_values())
             self.reset_input()
         else:
