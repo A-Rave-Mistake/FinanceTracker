@@ -75,6 +75,8 @@ class EntryListBox:
 
         self.current_button: SortButton = None
 
+        self.current_wallet = None
+
         self.entries: list[EntryListElement] = []
 
 
@@ -85,6 +87,7 @@ class EntryListBox:
         self.MainFrame.columnconfigure(0, weight=2)
         self.MainFrame.rowconfigure(0, weight=2)
 
+        # Top Bar
         self.TopBar1 = customtkinter.CTkFrame(master=self.MainFrame)
         self.TopBar1.grid(sticky="we", row=0)
 
@@ -94,15 +97,19 @@ class EntryListBox:
                                                padx=5)
         self.TopLabel.grid(row=0, sticky="w")
 
+        # Entry Filter
         self.FilterToggle = RadioToggle(master=self.TopBar1,
-                          root=self.parent.root,
-                          parent=self.parent,
-                          values=[("All", 0), ("Expense", 1), ("Income", 2)],
-                          row=1)
+                                        root=self.parent.root,
+                                        parent=self.parent,
+                                        values=[("All", 0), ("Expense", 1), ("Income", 2)],
+                                        callables=[self.filter_entries],
+                                        row=1)
 
+        # Top Sort Bar
         self.TopBar = customtkinter.CTkFrame(master=self.MainFrame, fg_color="transparent")
         self.TopBar.grid(sticky="we", row=2)
 
+            # Sorting Buttons
         self.WalletButton = SortButton(master=self.TopBar, parent=self, text="Wallet", column=0)
         self.NameButton = SortButton(master=self.TopBar, parent=self, text="Name", column=1)
         self.TypeButton = SortButton(master=self.TopBar, parent=self, text="Type", column=2)
@@ -110,6 +117,7 @@ class EntryListBox:
         self.CategoryButton = SortButton(master=self.TopBar, parent=self, text="Category", column=4)
         self.DateButton = SortButton(master=self.TopBar, parent=self, text="Date", column=5)
 
+        # Entry Container
         self.Canvas = customtkinter.CTkCanvas(self.MainFrame, bg="#212024", bd=0, highlightthickness=0, height=740)
         self.Canvas.grid(sticky="news", row=2)
 
@@ -134,15 +142,26 @@ class EntryListBox:
         self.root.update_idletasks()
         self.Canvas.configure(scrollregion=self.Canvas.bbox('all'))
 
-    def load_entries(self, entries: list[TrackerEntry]):
+    def load_entries(self, entries: list[TrackerEntry], **kwargs):
         self.clear_entries()
+
+        filter = kwargs.get('filter')
+
+        if filter != "All":
+            entries = [entry for entry in entries if entry.type == filter]
 
         for entry in entries:
             self.add_entry(entry)
         self.update()
 
     def clear_entries(self):
+        for child in self.entries:
+            child.MainFrame.destroy()
+            del child
         self.entries.clear()
-        for child in self.EntryList.winfo_children():
-            child.destroy()
         self.update()
+
+    def filter_entries(self, value: int):
+        self.clear_entries()
+        FILTERS = {0:"All", 1:"Expense", 2:"Income"}
+        self.load_entries(self.current_wallet.entries.get_all_entries(), filter=FILTERS[value])

@@ -18,7 +18,7 @@ class SpinBox():
         self.selection_values: list[str] = []
         self.selection_index = 0
 
-        self.callables: callable = callables or []
+        self.callables: list[callable] = callables or []
 
         # ---- Widgets ---- #
 

@@ -93,6 +93,7 @@ class MainWindow:
 
 
         self.add_wallet()
+        self.EntriesMaster.current_wallet = self.WalletMaster.wallets[0]
         self.WalletSelect.selection_at(0)
 
         self.Content.switch_to_index(1)
@@ -124,6 +125,7 @@ class MainWindow:
     def go_to_wallet(self, wallet, index: int):
         self.show_entries()
         self.HomeButton.set_selected()
+        self.EntriesMaster.current_wallet = wallet
         self.EntriesMaster.load_entries(wallet.entries.get_all_entries())
         self.EntryAdd.set_wallet(index)
         self.WalletSelect.selection_at(index)
