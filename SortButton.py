@@ -1,7 +1,7 @@
 import customtkinter
 
 class SortButton:
-    def __init__(self, master: customtkinter, parent, text: str, **kwargs):
+    def __init__(self, master: customtkinter, parent, text: str, sortby:str, **kwargs):
         '''
         Args:
              master::customtkinter
@@ -10,6 +10,8 @@ class SortButton:
                 The parent object this widget
             text::str
                 Text displayed by button
+            sortby::str
+                Sort value
             kwargs::dict
                 Additional widget attributes
         '''
@@ -17,6 +19,7 @@ class SortButton:
         self.master:customtkinter = master
         self.parent = parent
         self.text: str = text
+        self.sort_by: str = sortby
 
         self.sort_type: str = "none"
 
@@ -64,3 +67,6 @@ class SortButton:
             self.Button.configure(text=f"{self.text} v")
         else:
             self.Button.configure(text=f"{self.text}")
+
+    def apply_sort(self, value):
+        return (self.sort_by, self.sort_type)
