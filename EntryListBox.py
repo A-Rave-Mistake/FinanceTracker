@@ -107,7 +107,7 @@ class EntryListBox:
 
         # Top Sort Bar
         self.TopBar = customtkinter.CTkFrame(master=self.MainFrame, fg_color="transparent")
-        self.TopBar.grid(sticky="we", row=2)
+        self.TopBar.grid(sticky="we", row=1)
 
             # Sorting Buttons
         self.WalletButton = SortButton(master=self.TopBar, parent=self, text="Wallet", column=0)
