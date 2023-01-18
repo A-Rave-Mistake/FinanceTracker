@@ -1,7 +1,7 @@
 import customtkinter
 
 class SortButton:
-    def __init__(self, master: customtkinter, parent, text: str, sortby:str, **kwargs):
+    def __init__(self, master: customtkinter, parent, text: str, sortby:str, callables: list[callable], **kwargs):
         '''
         Args:
              master::customtkinter
@@ -12,6 +12,8 @@ class SortButton:
                 Text displayed by button
             sortby::str
                 Sort value
+            callables::callable
+                Callables that will be executed when self.apply_sort is called
             kwargs::dict
                 Additional widget attributes
         '''
@@ -19,6 +21,7 @@ class SortButton:
         self.master:customtkinter = master
         self.parent = parent
         self.text: str = text
+        self.callables: list[callable] = callables
         self.sort_by: str = sortby
 
         self.sort_type: str = "none"
@@ -55,6 +58,7 @@ class SortButton:
             self.sort_type = "none"
 
         self.change_button_direction()
+        self.apply_sort()
 
     def reset_sort(self):
         self.sort_type = "none"
@@ -68,5 +72,6 @@ class SortButton:
         else:
             self.Button.configure(text=f"{self.text}")
 
-    def apply_sort(self, value):
-        return (self.sort_by, self.sort_type)
+    def apply_sort(self):
+        for func in self.callables:
+            func((self.sort_by, self.sort_type))

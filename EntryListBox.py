@@ -4,6 +4,7 @@ from tkinter import *
 from entry import TrackerEntry
 from SortButton import SortButton
 from RadioToggle import RadioToggle
+from entrysorting import EntrySort
 
 
 class EntryListElement:
@@ -110,12 +111,12 @@ class EntryListBox:
         self.TopBar.grid(sticky="we", row=1)
 
             # Sorting Buttons
-        self.WalletButton = SortButton(master=self.TopBar, parent=self, text="Wallet", sortby="wallet", column=0)
-        self.NameButton = SortButton(master=self.TopBar, parent=self, text="Name", sortby="name", column=1)
-        self.TypeButton = SortButton(master=self.TopBar, parent=self, text="Type", sortby="type", column=2)
-        self.ValueButton = SortButton(master=self.TopBar, parent=self, text="Value", sortby="value", column=3)
-        self.CategoryButton = SortButton(master=self.TopBar, parent=self, text="Category", sortby="category", column=4)
-        self.DateButton = SortButton(master=self.TopBar, parent=self, text="Date", sortby="date", column=5)
+        self.WalletButton = SortButton(master=self.TopBar, parent=self, text="Wallet", sortby="wallet", callables=[self.sort_entries], column=0)
+        self.NameButton = SortButton(master=self.TopBar, parent=self, text="Name", sortby="name", callables=[self.sort_entries], column=1)
+        self.TypeButton = SortButton(master=self.TopBar, parent=self, text="Type", sortby="type", callables=[self.sort_entries], column=2)
+        self.ValueButton = SortButton(master=self.TopBar, parent=self, text="Value", sortby="value", callables=[self.sort_entries], column=3)
+        self.CategoryButton = SortButton(master=self.TopBar, parent=self, text="Category", sortby="category", callables=[self.sort_entries], column=4)
+        self.DateButton = SortButton(master=self.TopBar, parent=self, text="Date", sortby="date", callables=[self.sort_entries], column=5)
 
         # Entry Container
         self.Canvas = customtkinter.CTkCanvas(self.MainFrame, bg="#212024", bd=0, highlightthickness=0, height=700)
@@ -148,13 +149,14 @@ class EntryListBox:
         type_filter = kwargs.get('filter')
         sort = kwargs.get('sort')
 
-        if type_filter != "All":
-            #entries = [entry for entry in entries if entry.type == filter]
-            a = self.entry_type_matches(type_filter)
-            entries = list(filter(a, entries))
+        if all([type_filter != "All", type_filter != None]):
+            filter_call = self.entry_type_matches(type_filter)
+            entries = list(filter(filter_call, entries))
 
         if sort:
-            entries.sort()
+            sort_o = EntrySort(type=sort[0], value=sort[1], entries=entries)
+            entries = sort_o.get_entries()
+            del sort_o
 
         for entry in entries:
             self.add_entry(entry)
@@ -164,6 +166,7 @@ class EntryListBox:
         for child in self.entries:
             child.MainFrame.destroy()
             del child
+
         self.entries.clear()
         self.update()
 
@@ -179,4 +182,4 @@ class EntryListBox:
 
     def sort_entries(self, sorting: tuple):
         self.clear_entries()
-        self.load_entries(self.current_wallet.entries.get_all_entries, sort=sorting)
+        self.load_entries(self.current_wallet.entries.get_all_entries(), sort=sorting)
