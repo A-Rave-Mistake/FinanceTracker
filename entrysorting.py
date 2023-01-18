@@ -10,11 +10,37 @@ class EntrySort:
 
     def apply_sort(self):
         value = True if self.value == "descending" else False
+
         if self.type == "value":
             return (self.sort_by_value, value)
+        if self.type == "name":
+            return (self.sort_by_name, value)
+        if self.type == "type":
+            return (self.sort_by_type, value)
+        if self.type == "wallet":
+            return (self.sort_by_wallet, value)
+        if self.type == "category":
+            return (self.sort_by_category, value)
+        if self.type == "date":
+            return (self.sort_by_date, value)
 
     def sort_by_value(self, entry: TrackerEntry):
         return entry.value
+
+    def sort_by_name(self, entry: TrackerEntry):
+        return entry.name
+
+    def sort_by_wallet(self, entry: TrackerEntry):
+        return entry.wallet
+
+    def sort_by_type(self, entry: TrackerEntry):
+        return entry.type
+
+    def sort_by_category(self, entry: TrackerEntry):
+        return entry.category
+
+    def sort_by_date(self, entry: TrackerEntry):
+        return entry.date
 
     def get_entries(self):
         self.entries.sort(key=self.sort_func[0], reverse=self.sort_func[1])
