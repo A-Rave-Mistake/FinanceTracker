@@ -1,5 +1,8 @@
 import customtkinter
 
+from CategoryList import CategoryList
+
+
 class WalletBox:
     def __init__(self, master: customtkinter, parent, root: customtkinter.CTk):
         self.master: customtkinter = master
@@ -93,3 +96,44 @@ class WalletTargetBox(WalletBox):
 
         self.Expense.configure(text=f"{expense_current} / {expense_target}   ({expense_progress:.1f})%")
         self.Income.configure(text=f"{income_current} / {income_target}   ({income_progress:.1f})%")
+
+
+
+class WalletCategoryBox(WalletBox):
+    def __init__(self, master: customtkinter, parent, root: customtkinter.CTk, categories=None):
+        super().__init__(master, parent, root)
+        self.master: customtkinter = master
+        self.parent = parent
+        self.root: customtkinter.CTk = root
+
+        self.categories = categories
+        self.wallet = None
+
+
+        # ---- Widget ---- #
+
+        self.CatLabel = customtkinter.CTkLabel(self.ContentFrame, text="Categories", font=(("Lato"), 24, "bold"))
+        self.CatLabel.grid(row=0, column=0, pady=5, sticky="w")
+
+        self.CategoryFrame = customtkinter.CTkFrame(self.ContentFrame)
+        self.CategoryFrame.grid(row=1, column=0, pady=5, sticky="w")
+
+        self.CategoryList = CategoryList(master=self.CategoryFrame,
+                                         parent=self.parent,
+                                         root=self.root,
+                                         wallet=self.wallet)
+
+
+    def add_category(self, category):
+        self.categories.append(category)
+        self.CategoryList.add_category(category)
+
+    def set_wallet_info(self, wallet):
+        self.wallet = wallet
+        self.categories = wallet.categories
+        self.CategoryList.refresh_categories(self.categories)
+        self.refresh_categories()
+
+    def refresh_categories(self):
+        self.CategoryList.refresh_categories(self.categories)
+        print(self.categories)

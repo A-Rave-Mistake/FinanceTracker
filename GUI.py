@@ -102,6 +102,8 @@ class MainWindow:
 
         self.Content.switch_to_index(1)
 
+        new_wallet[0].add_category(name="Food", type="Income", color="green")
+
         self.root.mainloop()
 
 
@@ -136,3 +138,7 @@ class MainWindow:
 
     def on_WalletSelect_change(self, index: int):
         self.go_to_wallet(self.WalletMaster.wallets[index], index)
+
+    def update_categories(self):
+        self.CurrentWalletInfo.WalletCategories.refresh_categories()
+        self.EntryAdd.update_categories()

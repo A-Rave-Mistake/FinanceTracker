@@ -199,7 +199,6 @@ class EntryAdd:
         self.WalletDropdown.configure(values=self.wallets)
         self.WalletDropdown.set(self.wallets[0])
         self.current_wallet = None if len(self.walletsO) == 0 else self.walletsO[0]
-        self.current_wallet.add_category(name="Food", type="Income", color="green")
 
     def update_currency(self):
         self.CurrencyLabel.configure(text=self.current_wallet.currency)

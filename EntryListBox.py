@@ -120,7 +120,7 @@ class EntryListBox:
 
         # Entry Container
         self.Canvas = customtkinter.CTkCanvas(self.MainFrame, bg="#212024", bd=0, highlightthickness=0, height=700)
-        self.Canvas.grid(sticky="news", row=2)
+        self.Canvas.grid(sticky="we", row=2)
 
         self.Scrollbar = customtkinter.CTkScrollbar(self.MainFrame, orientation="vertical", command=self.Canvas.yview)
 
@@ -128,7 +128,7 @@ class EntryListBox:
         self.Canvas.bind('<Configure>', lambda e: self.Canvas.configure(scrollregion=self.Canvas.bbox("all")))
 
         self.EntryList = Frame(self.Canvas, bg="#212024", bd=0)
-        self.Canvas.create_window((0, 0), window=self.EntryList, anchor="nw", width=1900)
+        self.Canvas.create_window((0, 0), window=self.EntryList, anchor="nw", width=1200)
 
         self.Scrollbar.grid(row=0, column=1, rowspan=7, sticky="NS")
 

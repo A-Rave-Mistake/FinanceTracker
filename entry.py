@@ -55,14 +55,14 @@ class EntryContainer:
         self.entries.append(item)
         return self.entries
 
-    def add_category(self, kwargs) -> bool:
+    def add_category(self, kwargs):
         if self.category_exists(kwargs.get('name')):
-            return False
+            return None
         else:
             new_category = Category(self, kwargs.get('name'), kwargs.get('color'), kwargs.get('type'))
             self.categories.append(new_category)
             print(f"{kwargs['name']} [{kwargs['type']}]")
-            return True
+            return new_category
 
     def category_exists(self, name: str) -> bool:
         if name in [vars(cat)['name'] for cat in self.categories]:

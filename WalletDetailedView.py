@@ -1,7 +1,7 @@
 import customtkinter
 
 from EntryListBox import EntryListBox
-from WalletInfoBox import WalletInfoBox, WalletTargetBox
+from WalletInfoBox import WalletInfoBox, WalletTargetBox, WalletCategoryBox
 
 
 class WalletDetailedView:
@@ -30,11 +30,16 @@ class WalletDetailedView:
                                              parent=self.parent,
                                              root=self.root)
 
+        self.WalletCategories = WalletCategoryBox(master=self.RightBox,
+                                                  parent=self.parent,
+                                                  root=self.root)
+
     def set_wallet(self, wallet):
         self.wallet = wallet
         self.WalletEntries.current_wallet = wallet
 
         self.WalletEntries.load_entries(wallet.entries.get_all_entries())
+        self.WalletCategories.set_wallet_info(self.wallet)
         self.refresh_wallet_info()
 
     def refresh_wallet_info(self):

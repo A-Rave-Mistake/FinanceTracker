@@ -163,17 +163,18 @@ class Wallet(BaseWallet):
             return False
 
         if kwargs.get('type').lower() == "income":
-            print(self.entries.incomeList.add_category(kwargs))
+            new_cat = self.entries.incomeList.add_category(kwargs)
         elif kwargs.get('type').lower() == "expense":
-            print(self.entries.expenseList.add_category(kwargs))
+            new_cat = self.entries.expenseList.add_category(kwargs)
         elif kwargs.get('type').lower() == "both":
-            print(self.entries.incomeList.add_category(kwargs))
-            print(self.entries.expenseList.add_category(kwargs))
+            new_cat = self.entries.incomeList.add_category(kwargs)
+            new_cat = self.entries.expenseList.add_category(kwargs)
         else:
             print("Invalid Type")
             return False
 
-        self.parent.EntryAdd.update_categories()
+        self.categories.append(new_cat)
+        self.parent.update_categories()
         return True
 
     def category_exists(self, name: str) -> bool:
