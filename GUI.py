@@ -5,6 +5,7 @@ import FT_Time
 from WalletContainer import WalletContainer
 from wallet import Wallet
 from EntryListBox import EntryListBox
+from WalletDetailedView import WalletDetailedView
 from WidgetSwitcher import WidgetSwitcher
 from SelectionSpinBox import SpinBox
 from PageButton import PageButton
@@ -77,7 +78,9 @@ class MainWindow:
         self.WalletSelect = SpinBox(self.Test, self.root, callables=[self.on_WalletSelect_change])
         self.WalletSelect.WidgetSwitcher = self.Content
 
-        self.EntriesMaster = EntryListBox(master=self.Test, parent=self, root=self.root)
+        self.CurrentWalletInfo = WalletDetailedView(master=self.Test, parent=self, root=self.root)
+
+        #self.EntriesMaster = EntryListBox(master=self.Test, parent=self, root=self.root)
 
         self.Test.pack_forget()
         self.Content.add_widget(self.Test, "pack", expand=True, fill="x")
@@ -92,8 +95,9 @@ class MainWindow:
                                  wallets=self.WalletMaster.wallets)
 
 
-        self.add_wallet()
-        self.EntriesMaster.current_wallet = self.WalletMaster.wallets[0]
+        new_wallet = self.add_wallet()
+        self.go_to_wallet(new_wallet[0], new_wallet[1])
+        #self.EntriesMaster.current_wallet = self.WalletMaster.wallets[0]
         self.WalletSelect.selection_at(0)
 
         self.Content.switch_to_index(1)
@@ -104,7 +108,8 @@ class MainWindow:
     # ---- Functions ---- #
 
     def add_wallet(self):
-        new_wallet = self.WalletMaster.add_wallet()
+        self.WalletMaster.add_wallet()
+        return (self.WalletMaster.wallets[-1], self.WalletMaster.wallets.index(self.WalletMaster.wallets[-1]))
 
     def update_wallets(self, wallets: list[Wallet]):
         self.EntryAdd.update_wallet_list(wallets)
@@ -125,8 +130,7 @@ class MainWindow:
     def go_to_wallet(self, wallet, index: int):
         self.show_entries()
         self.HomeButton.set_selected()
-        self.EntriesMaster.current_wallet = wallet
-        self.EntriesMaster.load_entries(wallet.entries.get_all_entries())
+        self.CurrentWalletInfo.set_wallet(wallet)
         self.EntryAdd.set_wallet(index)
         self.WalletSelect.selection_at(index)
 

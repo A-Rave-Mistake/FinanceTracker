@@ -17,7 +17,7 @@ class EntryListElement:
         # ---- Widget ---- #
 
         self.MainFrame = customtkinter.CTkFrame(master=self.master, fg_color="#43444f")
-        self.MainFrame.pack(expand=True, fill="x", anchor="n")
+        self.MainFrame.pack(expand=True, fill="x")
 
         self.WalletLabel = customtkinter.CTkLabel(master=self.MainFrame,
                                                 text=self.entry.wallet,
@@ -84,7 +84,7 @@ class EntryListBox:
         # ---- Widget ---- #
 
         self.MainFrame = customtkinter.CTkFrame(master=self.master, fg_color="transparent", height=750)
-        self.MainFrame.pack(fill="both", expand=True)
+        self.MainFrame.pack(fill="both", expand=True, side="left")
         self.MainFrame.columnconfigure(0, weight=2)
         self.MainFrame.rowconfigure(0, weight=2)
 
@@ -100,7 +100,7 @@ class EntryListBox:
 
         # Entry Filter
         self.FilterToggle = RadioToggle(master=self.TopBar1,
-                                        root=self.parent.root,
+                                        root=self.root,
                                         parent=self.parent,
                                         values=[("All", 0), ("Expense", 1), ("Income", 2)],
                                         callables=[self.filter_entries],
@@ -142,6 +142,7 @@ class EntryListBox:
     def update(self):
         self.root.update_idletasks()
         self.Canvas.configure(scrollregion=self.Canvas.bbox('all'))
+        self.parent.refresh_wallet_info()
 
     def load_entries(self, entries: list[TrackerEntry], **kwargs):
         self.clear_entries()
