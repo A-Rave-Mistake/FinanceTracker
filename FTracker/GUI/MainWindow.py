@@ -1,10 +1,8 @@
 import customtkinter
 
-import FT_Time
-
+from FTracker.utils import FT_Time
+from FTracker.wallet import Wallet
 from WalletContainer import WalletContainer
-from wallet import Wallet
-from EntryListBox import EntryListBox
 from WalletDetailedView import WalletDetailedView
 from WidgetSwitcher import WidgetSwitcher
 from SelectionSpinBox import SpinBox
@@ -17,6 +15,18 @@ from EntryAdd import EntryAdd
 # Main Window
 class MainWindow:
     def __init__(self, darkmode: bool = True, geometry: tuple[int, int] = (1000, 700)):
+        """
+        Desc:
+            This class creates a window that contains all widgets and acts as parent for widget to widget communication.
+            It's so called an "app" itself.
+        Args:
+            darkmode::bool
+                Enable/Disable dark mode for the wiidget
+                True by default
+            geometry::(int, int)
+                Window size
+                (width, height)
+        """
 
 
         # ---- Widget ---- #

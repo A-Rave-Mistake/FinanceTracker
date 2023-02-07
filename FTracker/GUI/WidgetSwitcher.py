@@ -1,5 +1,4 @@
 import customtkinter
-from typing import NamedTuple
 
 class WidgetSwitcher:
     def __init__(self, root: customtkinter.CTk, widgets: list):

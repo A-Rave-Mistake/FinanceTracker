@@ -2,6 +2,18 @@ from entry import TrackerEntry
 
 class EntrySort:
     def __init__(self, type: str, value: str, entries: list[TrackerEntry]):
+        """
+        Desc:
+            Object used for quickly sorting entries within a container widget
+        Args:
+            type::str
+                Value by which the entries will be sorted.
+                Possible values: 'wallet', 'name', 'value', 'category', 'type' or 'date'
+            value::str
+                Sorting order.
+                Possible Values: 'none', 'ascending' or 'descending'
+        """
+
         self.type: str = type
         self.value: str = value
         self.entries: list[TrackerEntry] = entries

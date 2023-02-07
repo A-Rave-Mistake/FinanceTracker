@@ -1,8 +1,8 @@
 import customtkinter
 
 from RadioToggle import RadioToggle
-from wallet import Wallet
-from category import Category
+from FTracker.wallet import Wallet
+from FTracker.category import Category
 
 
 

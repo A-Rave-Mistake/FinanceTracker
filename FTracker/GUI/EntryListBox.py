@@ -1,14 +1,26 @@
 import customtkinter
-from tkinter import *
+from tkinter import Frame
 
-from entry import TrackerEntry
+from FTracker.entry import TrackerEntry
 from SortButton import SortButton
 from RadioToggle import RadioToggle
-from entrysorting import EntrySort
+from FTracker.entrysorting import EntrySort
 
 
 class EntryListElement:
     def __init__(self, master: customtkinter, parent, entry: TrackerEntry):
+        """
+        Desc:
+            A single entry widget item belonging to EntryListBox parent object.
+        Args:
+            master::customtkinter
+                self.EntryList element of parent
+            parent::EntryListBox
+                Parent widget object
+            entry::TrackerEntry
+                TrackerEntry assigned to this widget
+                Source: FTracker/entry.py
+        """
         self.master: customtkinter = master
         self.parent = parent
         self.entry = entry
@@ -58,7 +70,10 @@ class EntryListElement:
 
 class EntryListBox:
     def __init__(self, master: customtkinter, parent, root: customtkinter.CTk, row: int = 0, column: int = 0):
-        '''
+        """
+        Desc:
+            Contains a list of all tracker entries for currently selected wallet. Also contains sorting and filters
+            options for entries.
         Args:
              master::customtkinter
                 Parent widget element
@@ -66,7 +81,7 @@ class EntryListBox:
                 The parent object this list belongs to
             row::int & column::int
                 Position of widget component in parent widget
-        '''
+        """
 
         self.master: customtkinter = master
         self.parent = parent
@@ -145,19 +160,38 @@ class EntryListBox:
         self.parent.refresh_wallet_info()
 
     def load_entries(self, entries: list[TrackerEntry], **kwargs):
+        """
+        Args:
+            entries::[TrackerEntry]
+                A list of TrackerEntry instances derived from currently selected wallet.
+                Source: FTracker/entry.py
+            kwargs::dict
+                Additional sorting and filtering parameters. Normally it's optional unless 'filter' or/and 'sort'
+                keys are provided.
+                - Filter value is equal to: 'All', 'Income' or 'Expense' and will display entries of the same type
+                 as filter.
+                - Sort value is a tuple of 2 strings and sorts entries in specific manner. First value is the sorting
+                method and depends on what SortButton was pressed. Second value is the order of sorting.
+                    (type: str, value: str)
+                    type = equal to: 'wallet', 'name', 'value', 'type', 'category' or 'date'
+                    value = equal to: 'ascending', 'descending' or 'none'
+        """
+
         self.clear_entries()
 
-        type_filter = kwargs.get('filter')
-        sort = kwargs.get('sort')
+        type_filter = kwargs.get('filter') # Get filter value if it exists
+        sort = kwargs.get('sort') # Get sorting value if it exists
 
+        # Filter between 'All', 'Income' or 'Expense'
         if all([type_filter != "All", type_filter != None]):
             filter_call = self.entry_type_matches(type_filter)
             entries = list(filter(filter_call, entries))
 
+        # Create an EntrySort sorting object
+        # Source: FTracker/entrysorting.py
         if sort:
             sort_o = EntrySort(type=sort[0], value=sort[1], entries=entries)
             entries = sort_o.get_entries()
-            del sort_o
 
         for entry in entries:
             self.add_entry(entry)

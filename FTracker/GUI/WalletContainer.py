@@ -1,13 +1,15 @@
 import customtkinter
 
-from wallet import Wallet, DullWallet, BaseWallet, wallet_colors
-from linkedlist import LinkedList
+from FTracker.wallet import Wallet, DullWallet, BaseWallet, wallet_colors
+from FTracker.utils import linkedlist
 
 
 
-class WalletContainer(LinkedList):
+class WalletContainer(linkedlist.LinkedList):
     def __init__(self, master: customtkinter, parent, root: customtkinter.CTk, time):
         '''
+        Desc:
+            Contains and manages a list of wallet objects.
         Args:
             master::customtkinter
                 The container this Wallet belongs to (typically customtkinter.CTkFrame)
@@ -27,6 +29,7 @@ class WalletContainer(LinkedList):
 
         self.wallets: list[BaseWallet] = []
 
+        # ---- Widget ---- #
         self.WalletFrame = customtkinter.CTkFrame(master=self.master, fg_color="transparent")
         self.WalletFrame.pack(fill="both", expand=True)
 
@@ -35,6 +38,7 @@ class WalletContainer(LinkedList):
         if self.head and self.head.next:
             self.remove_dull_wallet()
 
+        # Use random color for wallet background color
         from random import choice
         wcolor = choice(wallet_colors)
 
@@ -61,6 +65,8 @@ class WalletContainer(LinkedList):
     # ---- Functions ---- #
 
     def add_dull_wallet(self):
+        # Add a 'dull wallet' that acts a button for adding new wallets
+
         if len(self.wallets) < 5:
             self.append(DullWallet(master=self.WalletFrame,
                                    parent=self,

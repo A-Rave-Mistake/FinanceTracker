@@ -1,10 +1,10 @@
 import customtkinter
 
-import FT_Time
+from FTracker.utils import FT_Time
 from entry import DateEntry
 from entry import DATE
-from linkedlist import LinkedList_Element
-from LabeledProgressBar import LabeledProgressBar, LabeledProgressBar_Target
+from utils.linkedlist import LinkedList_Element
+from GUI.LabeledProgressBar import LabeledProgressBar_Target
 
 
 wallet_colors: list[tuple[str, str]] = [("#32a852","#42bd63"),
@@ -75,7 +75,7 @@ class Wallet(BaseWallet):
         self.index: int = index
 
         self.time = FT_Time.now
-        self.months = [FT_Time.months[month] for month in range(1, self.time.tm_mon+1)]
+        self.months = [FT_Time.months[month] for month in range(1, self.time.tm_mon + 1)]
 
         self.categories: list[dict] = [] # List of Category.__dict__ elements
 

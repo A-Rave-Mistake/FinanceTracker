@@ -2,21 +2,25 @@ import customtkinter
 
 class SortButton:
     def __init__(self, master: customtkinter, parent, text: str, sortby:str, callables: list[callable], **kwargs):
-        '''
+        """
+        Desc:
+            Applies sorting effects (ascending / descending) to list of entries.
         Args:
              master::customtkinter
                 Parent widget element
             parent::Any Object
                 The parent object this widget
+                Usually EntryListBox object from /GUI/EntryListbox. EntryListBox contains all tracker entries to which
+                sorting is applied by this object.
             text::str
                 Text displayed by button
             sortby::str
                 Sort value
             callables::callable
-                Callables that will be executed when self.apply_sort is called
+                Callables that will be executed when self.apply_sort func is called
             kwargs::dict
-                Additional widget attributes
-        '''
+                Additional widget config attributes
+        """
 
         self.master:customtkinter = master
         self.parent = parent
@@ -24,7 +28,7 @@ class SortButton:
         self.callables: list[callable] = callables
         self.sort_by: str = sortby
 
-        self.sort_type: str = "none"
+        self.sort_type: str = "none" # Is one of these values ['none', 'Ascending', 'Descending']
 
         self.MainFrame = customtkinter.CTkFrame(master=self.master, fg_color="transparent")
         self.MainFrame.pack(side="left", expand=True, fill="x")
@@ -41,12 +45,14 @@ class SortButton:
 
     # ---- Functions ---- #
 
+    # Reset focus and cancel current applied sort
     def reset_focus(self):
         if self.parent.current_button:
             if not self.parent.current_button == self:
                 self.parent.current_button.reset_sort()
         self.parent.current_button = self
 
+    # Switch between
     def change_sort(self):
         self.reset_focus()
 

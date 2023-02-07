@@ -1,6 +1,6 @@
 from typing import NewType
 
-import FT_Time
+from FTracker.utils import FT_Time
 from category import Category
 
 
@@ -145,10 +145,10 @@ class DateEntry:
 
         if self.date[0] == "year":
             # Add entry to current month
-            self.children[FT_Time.now.tm_mon-1].add_entry(entry)
+            self.children[FT_Time.now.tm_mon - 1].add_entry(entry)
         elif self.date[0] == "month":
             # Add entry to the current day
-            self.children[FT_Time.now.tm_mday-1].add_entry(entry)
+            self.children[FT_Time.now.tm_mday - 1].add_entry(entry)
         else:
             return
 
