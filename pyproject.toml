@@ -2,42 +2,6 @@
 requires = ["setuptools~=62.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[project]
-name = "FinanceTracker"
-version = "1.0.0"
-license = {text = "MIT"}
-description = "Desktop app for tracking expense and income entries across multiple wallets."
-readme = "README.md"
-authors = [{name = "Adrian Urbaniak", email = "adrian.urbaniak1336@gmail.com"}]
-keywords = [
-    'finances',
-    'tracker',
-    'finance tracker',
-    'expenses tracker',
-    'income tracker',
-    'personal finances']
-classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: End Users/Desktop",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.11",
-    "Topic :: Office/Business :: Financial"
-]
-requires-python = ">=3.11.0"
-dependencies = [
-    "customtkinter>=5.0.3,<6.0",
-    "darkdetect>=0.8.0,<1.0",
-    "Pillow>=9.4.0,<10.0"
-]
-
-[project.urls]
-"Source Code" = "https://github.com/A-Rave-Mistake/FinanceTracker"
-
-[tool.setuptools]
-platforms = ["any"]
-zip-safe  = false
-include-package-data = true
-
-[tool.setuptools.packages.find]
-include = ["FTracker*"]
+[tool.pytest.ini_options]
+addopts = "--cov=FTracker"
+testpaths = ["tests",]

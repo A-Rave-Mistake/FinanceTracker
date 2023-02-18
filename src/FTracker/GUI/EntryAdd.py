@@ -132,7 +132,7 @@ class EntryAdd:
 
     # Add income/expense entry to the currently selected wallet
     def add_entry(self, *args):
-        if self.is_entry_valid():
+        if self.is_entry_valid(self.NameEntry.get(), self.AmountEntry.get()):
             print(self.current_wallet.wallet_name)
             self.current_wallet.add_entry(self.get_entry_values())
             self.reset_input()
@@ -151,19 +151,19 @@ class EntryAdd:
         d['wallet'] = self.current_wallet.wallet_name
         return d
 
-    def is_entry_valid(self) -> bool:
+    def is_entry_valid(self, name: str, amount: int|float) -> bool:
         self.NameEntry.configure(border_color="gray")
         self.AmountEntry.configure(border_color="gray")
 
-        if self.NameEntry.get() == "":
+        if name == "":
             self.NameEntry.configure(border_color="red")
             return False
 
-        if self.AmountEntry.get() == "":
+        if amount == "":
             self.AmountEntry.configure(border_color="red")
             return False
 
-        if not self.AmountEntry.get().isdigit():
+        if not type(amount) in [float, int]:
             self.AmountEntry.configure(border_color="red")
             return False
 
