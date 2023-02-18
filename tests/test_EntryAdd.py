@@ -19,7 +19,7 @@ def test_entry_with_value_as_zero():
     assert entry is True
 
 def test_entry_with_name_as_int():
-    # Although  the type of 'name' should be string, it also accepts numbers
+    # Although the type of 'name' should be string, it also accepts numbers
     entry = EntryAddTest.is_entry_valid(name=1234, amount=123)
     assert entry is True
 
@@ -34,6 +34,6 @@ def test_entry_with_value_as_string():
     entry = EntryAddTest.is_entry_valid(name="Fuel", amount="123")
     assert entry is False
 
-def test_entry_with_incorrect_inputs():
+def test_entry_with_both_incorrect_inputs():
     entry = EntryAddTest.is_entry_valid(name="", amount="")
     assert entry is False
