@@ -1,5 +1,7 @@
 import customtkinter
 
+from ..utils.clamping import string_to_float
+
 
 # Button for quickly adding income / expense entry into the log
 class EntryAdd:
@@ -131,14 +133,14 @@ class EntryAdd:
     # ---- Functions ---- #
 
     # Add income/expense entry to the currently selected wallet
-    def add_entry(self, *args):
-        if self.is_entry_valid(self.NameEntry.get(), self.AmountEntry.get()):
-            print(self.current_wallet.wallet_name)
-            self.current_wallet.add_entry(self.get_entry_values())
+    def add_entry(self, *args) -> bool:
+        entry_values: dict = self.get_entry_values()
+        if self.is_entry_valid(entry_values.get('name'), entry_values.get('value')):
+            self.current_wallet.add_entry(entry_values)
             self.reset_input()
+            return True
         else:
-            print("Failed to add new entry")
-            return
+            return False
 
     # Get all values inserted by the user and return them as a dictionary
     def get_entry_values(self) -> dict:
@@ -146,14 +148,18 @@ class EntryAdd:
         d['name'] = self.NameEntry.get()
         d['type'] = self.TypeDropdown.get()
         d['category'] = self.CategoryDropdown.get()
-        d['value'] = float(self.AmountEntry.get())
+        d['value'] = string_to_float(self.AmountEntry.get())
         d['currency'] = self.CurrencyLabel.cget("text")
         d['wallet'] = self.current_wallet.wallet_name
         return d
 
-    def is_entry_valid(self, name: str, amount: int|float) -> bool:
+    def is_entry_valid(self, name: str, amount: float) -> bool:
         self.NameEntry.configure(border_color="gray")
         self.AmountEntry.configure(border_color="gray")
+
+        if not isinstance(name, str):
+            self.NameEntry.configure(border_color="red")
+            return False
 
         if name == "":
             self.NameEntry.configure(border_color="red")
@@ -163,7 +169,7 @@ class EntryAdd:
             self.AmountEntry.configure(border_color="red")
             return False
 
-        if not type(amount) in [float, int]:
+        if not isinstance(amount, float):
             self.AmountEntry.configure(border_color="red")
             return False
 
